@@ -1,9 +1,11 @@
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 
-var users = require('./routes/users');
+// const users = require('./routes/users');
+const index = require('./')
+
 let ENV;
 
 try {
@@ -20,6 +22,7 @@ app.use(cookieParser())
 
 mongoose.connect(ENV.MONGODB_URI);
 
-app.use('/api/v1/users', users);
+// app.use('/api/v1/users', users);
+app.use('/', index)
 
 module.exports = app;
