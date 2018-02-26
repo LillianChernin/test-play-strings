@@ -38,3 +38,134 @@ header {
   margin: 0 auto;
   width: 90%;
 }
+.fingerboard-wrapper {
+  width: 280px;
+}
+.fingerboard {
+  background-image: url('../images/finger-board-template-v3.png');
+  background-repeat: no-repeat;
+  height: 350px;
+  width: 225px;
+}
+.fingerPlacement {
+  height: 38px;
+  width: 38px;
+  display: inline-block;
+  background-color: white;
+  border: 1px solid black;
+  z-index: 1;
+  border-radius: 20px;
+  position: relative;
+}
+.g6 {
+  left: 16px;
+  top: 17px;
+}
+.g5 {
+  left: 15px;
+  top: 21px;
+}
+.g4 {
+  left: 13px;
+  top: 22px;
+}
+.g3 {
+  left: 10px;
+  top: 25px;
+}
+.g2 {
+  left: 7px;
+  top: 28px;
+}
+.g1 {
+  left: 5px;
+  top: 30px;
+}
+.g0 {
+  left: 3px;
+  top: 20px;
+}
+.r6 {
+  left: 16px;
+  top: 5px;
+}
+.r5 {
+  left: 15px;
+  top: 12px;
+}
+.r4 {
+  left: 14px;
+  top: 17px;
+}
+.r3 {
+  left: 11px;
+  top: 19px;
+}
+.r2 {
+  left: 9px;
+  top: 19px;
+}
+.r1 {
+  left: 8px;
+  top: 19px;
+}
+.r0 {
+  left: 7px;
+  top: 5px;
+}
+.b6 {
+  left: 15px;
+  top: 5px;
+}
+.b5 {
+  left: 16px;
+  top: 10px;
+}
+.b4 {
+  left: 17px;
+  top: 14px;
+}
+.b3 {
+  left: 17px;
+  top: 18px;
+}
+.b2 {
+  left: 15px;
+  top: 20px;
+}
+.b1 {
+  left: 15px;
+  top: 20px;
+}
+.b0 {
+  left: 10px;
+  top: 5px;
+}
+.y6 {
+  left: 19px;
+  top: 14px;
+}
+.y5 {
+  left: 18px;
+  top: 17px;
+}
+.y4 {
+  left: 21px;
+  top: 21px;
+}
+.y3 {
+  left: 22px;
+  top: 26px;
+}
+.y2 {
+  left: 22px;
+  top: 28px;
+}
+.y1 {
+  left: 22px;
+  top: 29px;
+}
+.y0 {
+  left: 16px;
+  top: 15px;
+}
