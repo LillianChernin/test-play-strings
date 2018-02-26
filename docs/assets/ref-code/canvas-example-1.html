@@ -12,11 +12,11 @@ canvas {
 <body onload="startGame()">
 <script>
 
-var twinkleTwinkleViolin = [
+const twinkleTwinkleViolin = [
   {
     'color': 'red',
     'fret': '0',
-    'length': 1
+    'length': .5
   },{
     'color': 'red',
     'fret': '0',
@@ -41,6 +41,146 @@ var twinkleTwinkleViolin = [
     'color':'green',
     'fret':'0',
     'length': 2
+  },{
+    'color':'red',
+    'fret':'5',
+    'length': 1
+  },{
+    'color':'red',
+    'fret':'5',
+    'length': 1
+  },{
+    'color':'red',
+    'fret':'4',
+    'length':1
+  },{
+    'color':'red',
+    'fret':'4',
+    'length':1
+  },{
+    'color':'red',
+    'fret':'2',
+    'length':1
+  },{
+    'color':'red',
+    'fret':'2',
+    'length':1
+  },{
+    'color':'red',
+    'fret':'0',
+    'length':2
+  },{
+    'color':'green',
+    'fret':'0',
+    'length':1
+  },{
+    'color':'green',
+    'fret':'0',
+    'length':1
+  },{
+    'color':'red',
+    'fret':'5',
+    'length':1
+  },{
+    'color':'red',
+    'fret':'5',
+    'length':1
+  },{
+    'color':'red',
+    'fret':'4',
+    'length':1
+  },{
+    'color':'red',
+    'fret':'4',
+    'length':1
+  },{
+    'color':'red',
+    'fret':'2',
+    'length':2
+  },{
+    'color':'green',
+    'fret':'0',
+    'length':1
+  },{
+    'color':'green',
+    'fret':'0',
+    'length':1
+  },{
+    'color':'red',
+    'fret':'5',
+    'length':1
+  },{
+    'color':'red',
+    'fret':'5',
+    'length':1
+  },{
+    'color':'red',
+    'fret':'4',
+    'length':1
+  },{
+    'color':'red',
+    'fret':'4',
+    'length':1
+  },{
+    'color':'red',
+    'fret':'2',
+    'length':2
+  },{
+    'color': 'red',
+    'fret': '0',
+    'length': .5
+  },{
+    'color': 'red',
+    'fret': '0',
+    'length': 1
+  },{
+    'color':'green',
+    'fret': '0',
+    'length': 1
+  },{
+    'color':'green',
+    'fret':'0',
+    'length': 1
+  },{
+    'color':'green',
+    'fret':'2',
+    'length': 1
+  },{
+    'color':'green',
+    'fret':'2',
+    'length': 1
+  },{
+    'color':'green',
+    'fret':'0',
+    'length': 2
+  },{
+    'color':'red',
+    'fret':'5',
+    'length': 1
+  },{
+    'color':'red',
+    'fret':'5',
+    'length': 1
+  },{
+    'color':'red',
+    'fret':'4',
+    'length':1
+  },{
+    'color':'red',
+    'fret':'4',
+    'length':1
+  },{
+    'color':'red',
+    'fret':'2',
+    'length':1
+  },{
+    'color':'red',
+    'fret':'2',
+    'length':1
+  },{
+    'color':'red',
+    'fret':'0',
+    'length':2
   }
 ]
 
@@ -142,7 +282,7 @@ function updateGameArea() {
         // gap = Math.floor(Math.random()*(maxGap-minGap+1)+minGap);
         noteWidth = twinkleTwinkleViolin[beatCounter].length * 120;
         noteColor = twinkleTwinkleViolin[beatCounter].color;
-        let fretNoXPos = x + (noteWidth / 3);
+        let fretNoXPos = x + (noteWidth / 2);
         let fretNo = new component("30px", "Consolas", "black", fretNoXPos, 215, "text")
         fretNo.text = twinkleTwinkleViolin[beatCounter].fret;
         myObstacles.push(new component(noteWidth, 50, noteColor, x, 180));
