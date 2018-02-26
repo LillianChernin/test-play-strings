@@ -31,3 +31,10 @@ header {
   text-decoration: none;
   color: black;
 }
+.song-scroll-box {
+  border: 1px solid black;
+}
+.song-scroll-box-wrapper {
+  margin: 0 auto;
+  width: 90%;
+}
