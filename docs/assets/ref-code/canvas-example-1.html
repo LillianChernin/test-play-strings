@@ -131,7 +131,7 @@ const twinkleTwinkleViolin = [
   },{
     'color': red,
     'fret': '0',
-    'length': .5
+    'length': 1
   },{
     'color': red,
     'fret': '0',
@@ -187,6 +187,7 @@ const twinkleTwinkleViolin = [
   }
 ]
 
+
 var playLine;
 var myObstacles = [];
 var clearedObstacles = [];
@@ -197,7 +198,7 @@ var keyTracker = 0;
 function startGame() {
     playLine = new component(10, 360, "#6dffd8", 200, 0);
     // myGamePiece.gravity = 0.05;
-    myScore = new component("30px", "Consolas", "black", 280, 40, "text");
+    // myScore = new component("30px", "Consolas", "black", 280, 40, "text");
     myGameArea.start();
 }
 
@@ -209,7 +210,7 @@ var myGameArea = {
         this.context = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
         this.frameNo = 0;
-        this.interval = setInterval(updateGameArea, 15);
+        this.interval = setInterval(updateGameArea, 8);
         },
     clear : function() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -272,10 +273,10 @@ function component(width, height, color, x, y, type, key) {
         return crash;
     }
     this.passWith = function(otherobj) {
-      var myleft = this.x;
+      var myright = this.x + (this.width);
       var otherright = otherobj.x + (otherobj.width);
       var pass = false;
-      if (myleft > otherright) {
+      if (myright > otherright) {
         pass = true;
       }
       return pass;
@@ -283,7 +284,7 @@ function component(width, height, color, x, y, type, key) {
 }
 
 function updateGameArea() {
-    var x, height, gap, minHeight, maxHeight, minGap, maxGap, noteWidth, intervalLength, clearedX, clearedColor;
+    var x, height, gap, minHeight, maxHeight, minGap, maxGap, noteWidth, intervalLength, clearedX, clearedColor, currentInterval;
     for (i = 0; i < myObstacles.length; i += 1) {
         if (playLine.crashWith(myObstacles[i]) && (myObstacles[i].type !== "text")) {
           myObstacles[i].width--;
@@ -305,7 +306,6 @@ function updateGameArea() {
             clearedObstacles.push(new component(1, 50, clearedColor, clearedX, 180, 0, keyTracker))
           }
           if(playLine.passWith(myObstacles[i]) && (myObstacles[i].type !== "text")) {
-            console.log(myObstacles[i])
             myObstacles.splice(i,1);
           }
         }
@@ -317,7 +317,12 @@ function updateGameArea() {
     }
     myGameArea.clear();
     myGameArea.frameNo += 1;
-    if (myGameArea.frameNo == 1 || everyinterval(150)) {
+    if (myGameArea.frameNo === 1) {
+      currentInterval = 120;
+    } else {
+      currentInterval = (Number(myObstacles[myObstacles.length - 2].type)) * 120;
+    }
+    if (myGameArea.frameNo == 1 || everyinterval(currentInterval)) {
         x = myGameArea.canvas.width;
         // minHeight = 20;
         // maxHeight = 200;
@@ -325,7 +330,7 @@ function updateGameArea() {
         // minGap = 50;
         // maxGap = 200;
         // gap = Math.floor(Math.random()*(maxGap-minGap+1)+minGap);
-        noteWidth = twinkleTwinkleViolin[beatCounter].length * 120;
+        noteWidth = twinkleTwinkleViolin[beatCounter].length * 110;
         noteColor = twinkleTwinkleViolin[beatCounter].color;
         noteLength = twinkleTwinkleViolin[beatCounter].length;
         let fretNoXPos = x + (noteWidth / 2);
@@ -335,6 +340,7 @@ function updateGameArea() {
         myObstacles.push(fretNo);
         beatCounter++;
         keyTracker++;
+        currentInterval = noteLength * 120;
     }
     for (i = 0; i < myObstacles.length; i += 1) {
         myObstacles[i].x += -1;
@@ -344,8 +350,8 @@ function updateGameArea() {
         clearedObstacles[i].x += -1;
         clearedObstacles[i].update();
     }
-    myScore.text="SCORE: " + myGameArea.frameNo;
-    myScore.update();
+    // myScore.text="SCORE: " + myGameArea.frameNo;
+    // myScore.update();
     playLine.newPos();
     playLine.update();
 }
@@ -357,7 +363,5 @@ function everyinterval(n) {
 </script>
 <br>
 <button>Start Song</button>
-<p>Use the ACCELERATE button to stay in the air</p>
-<p>How long can you stay alive?</p>
 </body>
 </html>
