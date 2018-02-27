@@ -40,6 +40,7 @@ header {
 }
 .fingerboard-wrapper {
   width: 280px;
+  display: inline-block;
 }
 .fingerboard {
   background-image: url('../images/finger-board-template-v3.png');
@@ -60,6 +61,18 @@ header {
   z-index: 1;
   border-radius: 20px;
   position: relative;
+}
+.songs-ui-box-wrapper {
+  display:inline-block;
+  width: 50%;
+  text-align: center;
+}
+.song-bpm {
+  display: inline-block;
+}
+.song-button-spacer {
+  display: inline-block;
+  width: 20%;
 }
 .g6 {
   left: 16px;
