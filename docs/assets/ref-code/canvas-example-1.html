@@ -9,7 +9,7 @@ canvas {
 }
 </style>
 </head>
-<body onload="startGame()">
+<body>
 <script>
 
 const green = '#3eff30';
@@ -191,9 +191,12 @@ const twinkleTwinkleViolin = [
 var playLine;
 var myObstacles = [];
 var clearedObstacles = [];
-var myScore;
+// var myScore;
 var beatCounter = 0;
 var keyTracker = 0;
+var bpm = 80;
+var timing;
+var paused = false;
 
 function startGame() {
     playLine = new component(10, 360, "#6dffd8", 200, 0);
@@ -210,7 +213,8 @@ var myGameArea = {
         this.context = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
         this.frameNo = 0;
-        this.interval = setInterval(updateGameArea, 8);
+        // timing = bpm
+        this.interval = setInterval(updateGameArea, 5);
         },
     clear : function() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -284,6 +288,7 @@ function component(width, height, color, x, y, type, key) {
 }
 
 function updateGameArea() {
+  if (!paused) {
     var x, height, gap, minHeight, maxHeight, minGap, maxGap, noteWidth, intervalLength, clearedX, clearedColor, currentInterval;
     for (i = 0; i < myObstacles.length; i += 1) {
         if (playLine.crashWith(myObstacles[i]) && (myObstacles[i].type !== "text")) {
@@ -307,6 +312,8 @@ function updateGameArea() {
           }
           if(playLine.passWith(myObstacles[i]) && (myObstacles[i].type !== "text")) {
             myObstacles.splice(i,1);
+            let timePassed = new Date();
+            console.log(timePassed + ' ' + timePassed.getMilliseconds());
           }
         }
         // if ((myObstacles[i].type == "text")) {
@@ -354,14 +361,39 @@ function updateGameArea() {
     // myScore.update();
     playLine.newPos();
     playLine.update();
+  }
 }
 
 function everyinterval(n) {
     if ((myGameArea.frameNo / n) % 1 == 0) {return true;}
     return false;
 }
+
+document.addEventListener("DOMContentLoaded", function(event) {
+  let startSongButton = document.getElementsByClassName('startSong')[0];
+  let pauseButton = document.getElementsByClassName('pauseButton')[0];
+  let resumeButton = document.getElementsByClassName('resumeButton')[0];
+  startSongButton.addEventListener('click', (event) =>{
+    event.target.style.display = "none";
+    pauseButton.style.display = null;
+    startGame();
+  })
+  pauseButton.addEventListener('click', (event) => {
+    event.target.style.display = "none";
+    resumeButton.style.display = null;
+    paused = true;
+  })
+  resumeButton.addEventListener('click', (event) => {
+    event.target.style.display = "none";
+    pauseButton.style.display = null;
+    paused = false;
+  })
+});
+
 </script>
 <br>
-<button>Start Song</button>
+<button class='startSong'>Start Song</button>
+<button class='pauseButton' style='display: none'>Pause Song</button>
+<button class='resumeButton' style='display: none'>Resume Song</button>
 </body>
 </html>
