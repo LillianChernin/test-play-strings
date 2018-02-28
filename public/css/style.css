@@ -39,17 +39,21 @@ canvas {
   border: 1px solid black;
 }
 .song-scroll-box-wrapper {
-  margin: 0 auto;
-  width: 90%;
+  display: inline-block;
+  margin-top: 50px;
+  position: absolute;
+  left: 30%;
 }
 .fingerboard-wrapper {
-  width: 280px;
+  width: 250px;
   display: inline-block;
+  position: absolute;
+  left: 5%;
 }
 .fingerboard {
   background-image: url('../images/finger-board-template-v3.png');
   background-repeat: no-repeat;
-  height: 350px;
+  height: 400px;
   width: 225px;
 }
 .fingerPlacement {
@@ -67,7 +71,6 @@ canvas {
   position: relative;
 }
 .songs-ui-box-wrapper {
-  display:inline-block;
   width: 50%;
   text-align: center;
 }

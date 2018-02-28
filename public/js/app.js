@@ -1,4 +1,4 @@
-const canvas = document.getElementsByClassName('song-scroll-box')[0];
+// const canvas = document.getElementsByClassName('song-scroll-box')[0];
 
 const green = '#3eff30';
 const red = '#ff402b';
@@ -350,7 +350,6 @@ var keyTracker = 0;
 var paused = false;
 const songAudio = document.getElementById('songAudio');
 const songScrollBox = document.getElementsByClassName('song-scroll-box-wrapper')[0];
-console.log(songScrollBox);
 
 function startGame() {
     playLine = new component(10, 360, "#6dffd8", 200, 0);
@@ -482,15 +481,10 @@ function updateGameArea() {
           }
           if(playLine.passWith(myObstacles[i]) && (myObstacles[i].type !== "text")) {
             myObstacles.splice(i,1);
-            let timePassed = new Date();
+            // let timePassed = new Date();
             // console.log(timePassed + ' ' + timePassed.getMilliseconds());
           }
         }
-        // if ((myObstacles[i].type == "text")) {
-        //   clearedObstacles.push(myObstacles[i])
-        //   myObstacles.splice(i,1);
-        //   console.log(myObstacles[i].type)
-        // }
     }
     if (myNotes[0]) {
       if (playLine.startNote(myNotes[0])) {
@@ -504,17 +498,27 @@ function updateGameArea() {
     }
     if (playedNotes.length > 0) {
       if (playLine.stopNote(playedNotes[0])) {
-        console.log('my console logs are working!')
-        // songAudio.pause();
-        let previousNoteFromTable = sciPitchToStrAndFretViolin[playedNotes[0].pitch];
-        let previousNoteFretAndColor = previousNoteFromTable.color[0] + previousNoteFromTable.fret;
-        previousNote = document.getElementsByClassName(previousNoteFretAndColor)[0];
-        previousNote.style.color = 'white';
-        let nextNoteFromTable = sciPitchToStrAndFretViolin[myNotes[0].pitch];
-        let nextNoteFretAndColor = nextNoteFromTable.color[0] + nextNoteFromTable.fret;
-        let nextNote = document.getElementsByClassName(nextNoteFretAndColor)[0];
-        nextNote.style.color = 'black';
-        playedNotes.shift();
+        if (myNotes.length > 0) {
+          let previousNoteFromTable = sciPitchToStrAndFretViolin[playedNotes[0].pitch];
+          let previousNoteFretAndColor = previousNoteFromTable.color[0] + previousNoteFromTable.fret;
+          previousNote = document.getElementsByClassName(previousNoteFretAndColor)[0];
+          previousNote.style.color = 'white';
+          previousNote.style.background = 'white';
+          let nextNoteFromTable = sciPitchToStrAndFretViolin[myNotes[0].pitch];
+          let nextNoteFretAndColor = nextNoteFromTable.color[0] + nextNoteFromTable.fret;
+          let nextNote = document.getElementsByClassName(nextNoteFretAndColor)[0];
+          nextNote.style.color = 'black';
+          nextNote.style.background = '#3dffe2';
+          playedNotes.shift();
+        } else {
+          let previousNoteFromTable = sciPitchToStrAndFretViolin[playedNotes[0].pitch];
+          let previousNoteFretAndColor = previousNoteFromTable.color[0] + previousNoteFromTable.fret;
+          previousNote = document.getElementsByClassName(previousNoteFretAndColor)[0];
+          previousNote.style.color = 'white';
+          previousNote.style.background = 'white';
+          paused = true;
+          songAudio.pause();
+        }
       }
     }
     myGameArea.clear();
@@ -544,6 +548,7 @@ function updateGameArea() {
           let firstNoteFretAndColor = firstNoteFromTable.color[0] + firstNoteFromTable.fret;
           let firstNote = document.getElementsByClassName(firstNoteFretAndColor)[0];
           firstNote.style.color = 'black';
+          firstNote.style.background = '#3dffe2';
         }
     }
     for (let i = 0; i < myObstacles.length; i += 1) {
