@@ -10,6 +10,7 @@ canvas {
 </style>
 </head>
 <body>
+  <audio id="songAudio"></audio>
 <script>
 
 const green = '#3eff30';
@@ -19,171 +20,213 @@ const twinkleTwinkleViolin = [
   {
     'color': red,
     'fret': '0',
-    'length': 1
+    'length': 1,
+    'pitch': 'a4'
   },{
     'color': red,
     'fret': '0',
-    'length': 1
+    'length': 1,
+    'pitch': 'a4'
   },{
     'color':green,
     'fret': '0',
-    'length': 1
+    'length': 1,
+    'pitch':'e5'
   },{
     'color':green,
     'fret':'0',
-    'length': 1
+    'length': 1,
+    'pitch':'e5'
   },{
     'color':green,
     'fret':'2',
-    'length': 1
+    'length': 1,
+    'pitch':'gb5'
   },{
     'color':green,
     'fret':'2',
-    'length': 1
+    'length': 1,
+    'pitch':'gb5'
   },{
     'color':green,
     'fret':'0',
-    'length': 2
+    'length': 2,
+    'pitch':'e5'
   },{
     'color':red,
     'fret':'5',
-    'length': 1
+    'length': 1,
+    'pitch': 'd5'
   },{
     'color':red,
     'fret':'5',
-    'length': 1
+    'length': 1,
+    'pitch': 'd5'
   },{
     'color':red,
     'fret':'4',
-    'length':1
+    'length':1,
+    'pitch':'db5'
   },{
     'color':red,
     'fret':'4',
-    'length':1
+    'length':1,
+    'pitch':'db5'
   },{
     'color':red,
     'fret':'2',
-    'length':1
+    'length':1,
+    'pitch':'b4'
   },{
     'color':red,
     'fret':'2',
-    'length':1
+    'length':1,
+    'pitch':'b4'
   },{
     'color':red,
     'fret':'0',
-    'length':2
+    'length':2,
+    'pitch':'a4'
   },{
     'color':green,
     'fret':'0',
-    'length':1
+    'length':1,
+    'pitch':'e5'
   },{
     'color':green,
     'fret':'0',
-    'length':1
+    'length':1,
+    'pitch':'e5'
   },{
     'color':red,
     'fret':'5',
-    'length':1
+    'length':1,
+    'pitch':'d5'
   },{
     'color':red,
     'fret':'5',
-    'length':1
+    'length':1,
+    'pitch':'d5'
   },{
     'color':red,
     'fret':'4',
-    'length':1
+    'length':1,
+    'pitch':'db5'
   },{
     'color':red,
     'fret':'4',
-    'length':1
+    'length':1,
+    'pitch':'db5'
   },{
     'color':red,
     'fret':'2',
-    'length':2
+    'length':2,
+    'pitch':'b4'
   },{
     'color':green,
     'fret':'0',
-    'length':1
+    'length':1,
+    'pitch':'e5'
   },{
     'color':green,
     'fret':'0',
-    'length':1
+    'length':1,
+    'pitch':'e5'
   },{
     'color':red,
     'fret':'5',
-    'length':1
+    'length':1,
+    'pitch':'d5'
   },{
     'color':red,
     'fret':'5',
-    'length':1
+    'length':1,
+    'pitch':'d5'
   },{
     'color':red,
     'fret':'4',
-    'length':1
+    'length':1,
+    'pitch':'db5'
   },{
     'color':red,
     'fret':'4',
-    'length':1
+    'length':1,
+    'pitch':'db5'
   },{
     'color':red,
     'fret':'2',
-    'length':2
+    'length':2,
+    'pitch':'b4'
   },{
     'color': red,
     'fret': '0',
-    'length': 1
+    'length': 1,
+    'pitch':'a4'
   },{
     'color': red,
     'fret': '0',
-    'length': 1
+    'length': 1,
+    'pitch':'a4'
   },{
     'color':green,
     'fret': '0',
-    'length': 1
+    'length': 1,
+    'pitch':'e5'
   },{
     'color':green,
     'fret':'0',
-    'length': 1
+    'length': 1,
+    'pitch':'e5'
   },{
     'color':green,
     'fret':'2',
-    'length': 1
+    'length': 1,
+    'pitch':'gb5'
   },{
     'color':green,
     'fret':'2',
-    'length': 1
+    'length': 1,
+    'pitch':'gb5'
   },{
     'color':green,
     'fret':'0',
-    'length': 2
+    'length': 2,
+    'pitch':'e5'
   },{
     'color':red,
     'fret':'5',
-    'length': 1
+    'length': 1,
+    'pitch':'d5'
   },{
     'color':red,
     'fret':'5',
-    'length': 1
+    'length': 1,
+    'pitch':'d5'
   },{
     'color':red,
     'fret':'4',
-    'length':1
+    'length':1,
+    'pitch':'db5'
   },{
     'color':red,
     'fret':'4',
-    'length':1
+    'length':1,
+    'pitch':'db5'
   },{
     'color':red,
     'fret':'2',
-    'length':1
+    'length':1,
+    'pitch':'b4'
   },{
     'color':red,
     'fret':'2',
-    'length':1
+    'length':1,
+    'pitch':'b4'
   },{
     'color':red,
     'fret':'0',
-    'length':2
+    'length':2,
+    'pitch':'a4'
   }
 ]
 
@@ -191,12 +234,15 @@ const twinkleTwinkleViolin = [
 var playLine;
 var myObstacles = [];
 var clearedObstacles = [];
+var myNotes = [];
+var playedNotes = [];
 // var myScore;
 var beatCounter = 0;
 var keyTracker = 0;
 var bpm = 80;
 var timing;
 var paused = false;
+const songAudio = document.getElementById('songAudio');
 
 function startGame() {
     playLine = new component(10, 360, "#6dffd8", 200, 0);
@@ -221,7 +267,7 @@ var myGameArea = {
     }
 }
 
-function component(width, height, color, x, y, type, key) {
+function component(width, height, color, x, y, type, key, pitch) {
     this.type = type;
     this.score = 0;
     this.width = width;
@@ -232,6 +278,7 @@ function component(width, height, color, x, y, type, key) {
     this.y = y;
     this.color = color;
     this.key = key;
+    this.pitch = pitch;
     // this.gravity = 0;
     // this.gravitySpeed = 0;
     this.update = function() {
@@ -285,12 +332,30 @@ function component(width, height, color, x, y, type, key) {
       }
       return pass;
     }
+    this.startNote = function(otherobj) {
+      let start = false;
+      var myright = this.x + (this.width);
+      var otherleft = otherobj.x;
+      if (myright === otherleft) {
+        start = true;
+      }
+      return start;
+    }
+    this.stopNote = function(otherobj) {
+      let stop = false;
+      var myright = this.x + (this.width);
+      var otherright = otherobj.x + (otherobj.width);
+      if (myright === otherright) {
+        stop = true;
+      }
+      return stop;
+    }
 }
 
 function updateGameArea() {
   if (!paused) {
     var x, height, gap, minHeight, maxHeight, minGap, maxGap, noteWidth, intervalLength, clearedX, clearedColor, currentInterval;
-    for (i = 0; i < myObstacles.length; i += 1) {
+    for (var i = 0; i < myObstacles.length; i += 1) {
         if (playLine.crashWith(myObstacles[i]) && (myObstacles[i].type !== "text")) {
           myObstacles[i].width--;
           myObstacles[i].x++;
@@ -322,6 +387,21 @@ function updateGameArea() {
         //   console.log(myObstacles[i].type)
         // }
     }
+    if (myNotes[0]) {
+      if (playLine.startNote(myNotes[0])) {
+        let srcUrl = "../../../public/mp3/" + myNotes[0].pitch + ".mp3"
+        songAudio.src = srcUrl;
+        songAudio.play();
+        playedNotes.push(myNotes[0]);
+        myNotes.shift();
+      }
+    }
+    if (playedNotes[0]) {
+      if (playLine.stopNote(playedNotes[0])) {
+        songAudio.pause();
+        playedNotes.shift();
+      }
+    }
     myGameArea.clear();
     myGameArea.frameNo += 1;
     if (myGameArea.frameNo === 1) {
@@ -340,11 +420,13 @@ function updateGameArea() {
         noteWidth = twinkleTwinkleViolin[beatCounter].length * 110;
         noteColor = twinkleTwinkleViolin[beatCounter].color;
         noteLength = twinkleTwinkleViolin[beatCounter].length;
+        notePitch = twinkleTwinkleViolin[beatCounter].pitch;
         let fretNoXPos = x + (noteWidth / 2);
         let fretNo = new component("30px", "Consolas", "black", fretNoXPos, 215, "text", keyTracker)
         fretNo.text = twinkleTwinkleViolin[beatCounter].fret;
         myObstacles.push(new component(noteWidth, 50, noteColor, x, 180, noteLength, keyTracker));
         myObstacles.push(fretNo);
+        myNotes.push(new component(noteWidth, 50, "rgba(0,0,0,0)", x, 180, noteLength, keyTracker, notePitch))
         beatCounter++;
         keyTracker++;
         currentInterval = noteLength * 120;
@@ -352,6 +434,10 @@ function updateGameArea() {
     for (i = 0; i < myObstacles.length; i += 1) {
         myObstacles[i].x += -1;
         myObstacles[i].update();
+    }
+    for (i = 0; i < myNotes.length; i += 1) {
+        myNotes[i].x += -1;
+        myNotes[i].update();
     }
     for (i = 0; i < clearedObstacles.length; i += 1) {
         clearedObstacles[i].x += -1;
