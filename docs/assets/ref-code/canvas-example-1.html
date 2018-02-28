@@ -11,6 +11,20 @@ canvas {
 </head>
 <body>
   <audio id="songAudio"></audio>
+  <!-- <p>
+			<button onclick="this.innerText = togglePlayback()">use demo audio</button>
+			<button onclick="toggleLiveInput()">use live input</button>
+			<button onclick="toggleOscillator()">use oscillator</button> -->
+			<!--<button onclick="updatePitch(0);">sample</button>-->
+		<!-- </p> -->
+
+		<!-- <div id="detector" class="vague">
+			<div class="pitch"><span id="pitch"></span>Hz</div>
+			<div class="note"><span id="note"></span></div>
+			<canvas id="output" width=300 height=42></canvas>
+			<div id="detune"><span id="detune_amt"></span><span id="flat">cents &#9837;</span><span id="sharp">cents &#9839;</span></div>
+		</div>
+<script src="../pitch-detect/pitchdetect.js"></script> -->
 <script>
 
 const green = '#3eff30';
@@ -246,8 +260,6 @@ const songAudio = document.getElementById('songAudio');
 
 function startGame() {
     playLine = new component(10, 360, "#6dffd8", 200, 0);
-    // myGamePiece.gravity = 0.05;
-    // myScore = new component("30px", "Consolas", "black", 280, 40, "text");
     myGameArea.start();
 }
 
@@ -411,12 +423,6 @@ function updateGameArea() {
     }
     if (myGameArea.frameNo == 1 || everyinterval(currentInterval)) {
         x = myGameArea.canvas.width;
-        // minHeight = 20;
-        // maxHeight = 200;
-        // height = Math.floor(Math.random()*(maxHeight-minHeight+1)+minHeight);
-        // minGap = 50;
-        // maxGap = 200;
-        // gap = Math.floor(Math.random()*(maxGap-minGap+1)+minGap);
         noteWidth = twinkleTwinkleViolin[beatCounter].length * 110;
         noteColor = twinkleTwinkleViolin[beatCounter].color;
         noteLength = twinkleTwinkleViolin[beatCounter].length;
