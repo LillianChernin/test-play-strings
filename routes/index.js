@@ -12,5 +12,10 @@ router.use('/songs', songs);
 router.get('/', indexController.index);
 router.post('/signup', indexController.signup);
 router.post('/login', indexController.login);
+router.get('*', (req, res) => {
+  res.render('./four-zero-four', {
+    documentTitle: "404 Error"
+  });
+})
 
 module.exports = router;
