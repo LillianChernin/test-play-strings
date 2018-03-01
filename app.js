@@ -3,6 +3,8 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+const session = require('express-session');
 
 // const users = require('./routes/users');
 const index = require('./routes/index')
@@ -23,6 +25,7 @@ app.use(cookieParser())
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
+app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 }}))
 
 mongoose.connect(ENV.MONGODB_URI);
 

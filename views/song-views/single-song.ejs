@@ -1,7 +1,52 @@
-<% include partials/header %>
+<% include ../partials/header %>
 
-<% include partials/songs-ui-box %>
-<% include partials/fingerboard %>
-<% include partials/song-scroll-box %>
+<div class="songs-ui-box-wrapper">
+  <h2 class="song-title"><%= song.name %></h2>
+  <h3 class="song-bpm">BPM <span class="current-bpm">80</span></h3><button>Change BPM</button>
+  <br>
+  <button><a href="/songs">Change Song</a></button><div class="song-button-spacer"></div><button class='startSong'>Start Song</button>
+  <button class='pauseButton' style='display: none'>Pause Song</button>
+  <button class='resumeButton' style='display: none'>Resume Song</button>
+</div>
 
-<% include partials/footer %>
+<div class="fingerboard-wrapper">
+  <div class="fingerPlacement y0">0</div>
+  <div class="fingerPlacement b0">0</div>
+  <div class="fingerPlacement r0">0</div>
+  <div class="fingerPlacement g0">0</div>
+  <div class="fingerboard">
+    <div class="fingerPlacement y1">1</div>
+    <div class="fingerPlacement b1">1</div>
+    <div class="fingerPlacement r1">1</div>
+    <div class="fingerPlacement g1">1</div>
+    <div class="fingerPlacement y2">2</div>
+    <div class="fingerPlacement b2">2</div>
+    <div class="fingerPlacement r2">2</div>
+    <div class="fingerPlacement g2">2</div>
+    <div class="fingerPlacement y3">3</div>
+    <div class="fingerPlacement b3">3</div>
+    <div class="fingerPlacement r3">3</div>
+    <div class="fingerPlacement g3">3</div>
+    <div class="fingerPlacement y4">4</div>
+    <div class="fingerPlacement b4">4</div>
+    <div class="fingerPlacement r4">4</div>
+    <div class="fingerPlacement g4">4</div>
+    <div class="fingerPlacement y5">5</div>
+    <div class="fingerPlacement b5">5</div>
+    <div class="fingerPlacement r5">5</div>
+    <div class="fingerPlacement g5">5</div>
+    <div class="fingerPlacement y6">6</div>
+    <div class="fingerPlacement b6">6</div>
+    <div class="fingerPlacement r6">6</div>
+    <div class="fingerPlacement g6">6</div>
+  </div>
+</div>
+<div class="song-scroll-box-wrapper">
+  <audio id="songAudio"></audio>
+<!-- <canvas class="song-scroll-box" width="1000" height="400">
+</canvas> -->
+</div>
+
+<input type="hidden" class="currentSong" value="<%= song.songData%>">
+
+<% include ../partials/footer %>

@@ -1,9 +1,9 @@
-<% include partials/header %>
+<% include ../partials/header %>
 
 <div class="song-list-wrapper">
   <% for (let i = 0; i < data.length; i++) { %>
   <div>
-    <a href="/songs/<%= data[i]._id"><span><%= data[i].name %></span></a>
+    <a href="/songs/<%= data[i]._id%>"><span><%= data[i].name %></span></a>
     <div class="song-list-spacer"></div>
     <div class="difficulty-stars-display">
       <% for (let k = 0; k < data[i].difficulty; k++) { %>
@@ -17,4 +17,4 @@
   <% } %>
 <div>
 
-<% include partials/footer %>
+<% include ../partials/footer %>

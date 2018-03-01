@@ -9,3 +9,4 @@ try {
 mongoose.connect(ENV.MONGODB_URI);
 
 module.exports.Song = require('./song');
+module.exports.User = require('./user');
