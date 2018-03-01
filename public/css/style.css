@@ -12,6 +12,10 @@ canvas {
     border:1px solid #d3d3d3;
     background-color: #f1f1f1;
 }
+a {
+  color: black;
+  text-decoration: none;
+}
 .logo {
   font-family: 'Tillana', cursive;
   text-decoration: none;
@@ -80,6 +84,18 @@ canvas {
 .song-button-spacer {
   display: inline-block;
   width: 20%;
+}
+.song-list-wrapper {
+  width: 80%;
+  margin: 0 auto;
+  text-align: center;
+}
+.song-list-spacer {
+  width: 20%;
+  display: inline-block;
+}
+.star {
+  display: inline-block;
 }
 .g6 {
   left: 16px;

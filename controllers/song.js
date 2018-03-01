@@ -19,5 +19,12 @@ const show = (req, res) => {
   })
 }
 
+const createSong = (req, res) => {
+  res.render('./song-views/create-song', {
+    documentTitle: "Create New Song"
+  })
+}
+
 module.exports.index = index;
 module.exports.show = show;
+module.exports.createSong = createSong;
