@@ -31,6 +31,7 @@ var myGameArea = {
         songScrollBox.appendChild(this.canvas);
         this.frameNo = 0;
         this.interval = setInterval(updateGameArea, 5);
+        this.distanceToNextNote = 1;
         },
     clear : function() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -106,7 +107,7 @@ function component(width, height, color, x, y, type, key, pitch) {
 
 function updateGameArea() {
   if (!paused) {
-    var x, height, gap, minHeight, maxHeight, minGap, maxGap, noteWidth, intervalLength, clearedX, clearedColor, currentInterval;
+    var x, height, gap, minHeight, maxHeight, minGap, maxGap, noteWidth, intervalLength, clearedX, clearedColor, currentInterval, distanceToNextNote;
     for (var i = 0; i < myObstacles.length; i += 1) {
         if (playLine.crashWith(myObstacles[i]) && (myObstacles[i].type !== "text")) {
           myObstacles[i].width--;
@@ -171,12 +172,8 @@ function updateGameArea() {
     }
     myGameArea.clear();
     myGameArea.frameNo += 1;
-    if (myGameArea.frameNo === 1) {
-      currentInterval = 120;
-    } else {
-      currentInterval = (Number(myObstacles[myObstacles.length - 2].type)) * 120;
-    }
-    if (myGameArea.frameNo == 1 || everyinterval(currentInterval)) {
+    myGameArea.distanceToNextNote -= 1;
+    if (myGameArea.distanceToNextNote === 0) {
         x = myGameArea.canvas.width;
         noteWidth = currentSong[beatCounter].length * 110;
         noteColor = currentSong[beatCounter].color;
@@ -190,7 +187,7 @@ function updateGameArea() {
         myNotes.push(new component(noteWidth, 50, "rgba(0,0,0,0)", x, 180, noteLength, keyTracker, notePitch))
         beatCounter++;
         keyTracker++;
-        currentInterval = noteLength * 120;
+        myGameArea.distanceToNextNote = noteLength * 120;
         if (myGameArea.frameNo == 1) {
           let firstNoteFromTable = sciPitchToStrAndFretViolin[myNotes[0].pitch];
           let firstNoteFretAndColor = firstNoteFromTable.color[0] + firstNoteFromTable.fret;
@@ -219,12 +216,6 @@ function updateGameArea() {
   }
 }
 
-function everyinterval(n) {
-    if ((myGameArea.frameNo / n) % 1 == 0) {return true;}
-    return false;
-}
-
-
 
 document.addEventListener("DOMContentLoaded", (event) => {
   let startSongButton = document.getElementsByClassName('startSong')[0];
@@ -232,7 +223,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
   let resumeButton = document.getElementsByClassName('resumeButton')[0];
   let getRequestUrl = '/api/v1' + document.location.pathname;
   let currentSongIdNum = document.location.pathname.split('/')[2];
-  console.log(getRequestUrl);
   startSongButton.addEventListener('click', (event) =>{
     event.target.style.display = "none";
     pauseButton.style.display = null;
@@ -259,7 +249,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
         let currentNoteData = {};
         currentNoteData.length = currentSongRawData[i].length;
         currentNoteData.pitch = currentSongRawData[i].pitch;
-        console.log(currentNoteData);
         currentNoteData.fret = sciPitchToStrAndFretViolin[currentSongRawData[i].pitch].fret;
         if (sciPitchToStrAndFretViolin[currentSongRawData[i].pitch].color === 'green') {
           currentNoteData.color = green;
@@ -272,7 +261,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
         }
         currentSong.push(currentNoteData);
       }
-      console.log(currentSong);
     },
     error: () => {
       console.log('error retrieving current song data');
