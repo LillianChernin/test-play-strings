@@ -1,0 +1,20 @@
+<% include partials/header %>
+
+<div class="song-list-wrapper">
+  <% for (let i = 0; i < data.length; i++) { %>
+  <div>
+    <a href="/songs/<%= data[i]._id"><span><%= data[i].name %></span></a>
+    <div class="song-list-spacer"></div>
+    <div class="difficulty-stars-display">
+      <% for (let k = 0; k < data[i].difficulty; k++) { %>
+        <img class="star" src="images/filled-star.png" height="30" width="30">
+      <% } %>
+      <% for (let j = 0; j < 5 - data[i].difficulty; j++) { %>
+        <img class="star" src="images/empty-star.png" height="30" width="30">
+    <% } %>
+    </div>
+  </div>
+  <% } %>
+<div>
+
+<% include partials/footer %>
