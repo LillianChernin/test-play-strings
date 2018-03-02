@@ -10,8 +10,8 @@ var myNotes = [];
 var playedNotes = [];
 var beatCounter = 0;
 var keyTracker = 0;
-// var bpm = 80;
-// var timing;
+var timing = 120;
+var intervalTiming = 5;
 const currentSong = [];
 var paused = false;
 const songAudio = document.getElementById('songAudio');
@@ -30,7 +30,7 @@ var myGameArea = {
         this.context = this.canvas.getContext("2d");
         songScrollBox.appendChild(this.canvas);
         this.frameNo = 0;
-        this.interval = setInterval(updateGameArea, 5);
+        this.interval = setInterval(updateGameArea, intervalTiming);
         this.distanceToNextNote = 1;
         },
     clear : function() {
@@ -175,7 +175,7 @@ function updateGameArea() {
     myGameArea.distanceToNextNote -= 1;
     if (myGameArea.distanceToNextNote === 0) {
         x = myGameArea.canvas.width;
-        noteWidth = currentSong[beatCounter].length * 110;
+        noteWidth = currentSong[beatCounter].length * (timing - 10);
         noteColor = currentSong[beatCounter].color;
         noteLength = currentSong[beatCounter].length;
         notePitch = currentSong[beatCounter].pitch;
@@ -187,7 +187,7 @@ function updateGameArea() {
         myNotes.push(new component(noteWidth, 50, "rgba(0,0,0,0)", x, 180, noteLength, keyTracker, notePitch))
         beatCounter++;
         keyTracker++;
-        myGameArea.distanceToNextNote = noteLength * 120;
+        myGameArea.distanceToNextNote = noteLength * timing;
         if (myGameArea.frameNo == 1) {
           let firstNoteFromTable = sciPitchToStrAndFretViolin[myNotes[0].pitch];
           let firstNoteFretAndColor = firstNoteFromTable.color[0] + firstNoteFromTable.fret;
@@ -235,10 +235,28 @@ document.addEventListener("DOMContentLoaded", (event) => {
     songAudio.pause();
   })
   resumeButton.addEventListener('click', (event) => {
-    event.target.style.display = "none";
+    event.target.style.display = 'none';
     pauseButton.style.display = null;
     paused = false;
     songAudio.play();
+  })
+  $('.bpmSelectionButton').on('click', (event) => {
+    let speedButtons = document.getElementsByClassName('bpmSelectionButton');
+    for (let i = 0; i < speedButtons.length; i++) {
+      speedButtons[i].style.display = 'none';
+    }
+    startSongButton.style.display = null;
+    document.getElementsByClassName('speedSelectionMessage')[0].style.display = 'none';
+    let speed = event.target.dataset.speed;
+    if (speed === 'verySlow') {
+      intervalTiming = 10;
+    } else if (speed === 'slow') {
+      intervalTiming = 7;
+    } else if (speed === 'normal') {
+      intervalTiming = 5;
+    } else if (speed === 'fast') {
+      intervalTiming = 3;
+    }
   })
   $.ajax({
     method: "GET",

@@ -1,8 +1,12 @@
 <div class="songs-ui-box-wrapper">
-  <h2 class="song-title">Twinkle Twinkle Little Star</h2>
-  <h3 class="song-bpm">BPM <span class="current-bpm">80</span></h3><button>Change BPM</button>
+  <h2 class="song-title"><%= song.name %></h2>
+  <h3 class="speedSelectionMessage">Select play speed below:</h3>
+  <button class="bpmSelectionButton" data-speed="verySlow">Very Slow</button>
+  <button class="bpmSelectionButton" data-speed="slow">Slow</button>
+  <button class="bpmSelectionButton" data-speed="normal">Normal</button>
+  <button class="bpmSelectionButton" data-speed="fast">Fast</button>
   <br>
-  <button><a href="/songs">Change Song</a></button><div class="song-button-spacer"></div><button class='startSong'>Start Song</button>
+  <button class='startSong' style='display: none'>Start Song</button>
   <button class='pauseButton' style='display: none'>Pause Song</button>
   <button class='resumeButton' style='display: none'>Resume Song</button>
 </div>

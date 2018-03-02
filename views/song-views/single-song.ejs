@@ -1,13 +1,6 @@
 <% include ../partials/header %>
 
-<div class="songs-ui-box-wrapper">
-  <h2 class="song-title"><%= song.name %></h2>
-  <h3 class="song-bpm">BPM <span class="current-bpm">80</span></h3><button>Change BPM</button>
-  <br>
-  <button><a href="/songs">Change Song</a></button><div class="song-button-spacer"></div><button class='startSong'>Start Song</button>
-  <button class='pauseButton' style='display: none'>Pause Song</button>
-  <button class='resumeButton' style='display: none'>Resume Song</button>
-</div>
+<% include ../partials/songs-ui-box %>
 
 <div class="fingerboard-wrapper">
   <div class="fingerPlacement y0">0</div>
