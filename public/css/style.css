@@ -18,12 +18,12 @@ a {
 }
 .header-nav-links:hover {
   background-color: rgba(244, 235, 66, .6);
-  padding: 5px;
   font-weight: bolder;
   border-radius: 15px;
 }
 .song-list-link {
   font-size: 20px;
+  padding: 5px;
 }
 .song-list-header {
   font-size: 32px;
@@ -31,8 +31,6 @@ a {
 
 .song-list-link:hover {
   background-color: rgba(244, 235, 66, .6);
-  padding: 5px;
-  font-weight: bolder;
   border-radius: 15px;
 
 }
@@ -58,6 +56,7 @@ a {
 }
 .header-nav-links {
   text-decoration: none;
+  padding: 5px;
   color: black;
 }
 .song-scroll-box {
@@ -69,6 +68,7 @@ a {
   position: absolute;
   left: 30%;
 }
+
 .fingerboard-wrapper {
   width: 250px;
   display: inline-block;
@@ -98,13 +98,62 @@ a {
 .songs-ui-box-wrapper {
   width: 50%;
   text-align: center;
+  margin: 0 auto;
 }
-.song-bpm {
-  display: inline-block;
+.startSong {
+  border: 3px outset rgba(0,0,0,0);
+  background-color: #65c456;
+  border-radius: 6px;
+  padding: 8px;
+  font-size: 16px;
 }
-.song-button-spacer {
-  display: inline-block;
-  width: 20%;
+.pauseButton {
+  border: 3px outset rgba(0,0,0,0);
+  background-color: #e54b3d;
+  border-radius: 6px;
+  padding: 8px;
+  font-size: 16px;
+}
+.resumeButton {
+  border: 3px outset rgba(0,0,0,0);
+  background-color: #65c456;
+  border-radius: 6px;
+  padding: 8px;
+  font-size: 16px;
+}
+.startSong:hover {
+  border: 3px outset #686864;
+}
+.pauseButton:hover {
+  border: 3px outset #686864;
+}
+.resumeButton:hover {
+  border: 3px outset #686864;
+}
+.song-title {
+  font-size: 36px;
+}
+.bpmSelectionButton {
+  border: 3px outset rgba(0,0,0,0);
+  border-radius: 6px;
+  padding: 8px;
+  font-size: 16px;
+  margin: 6px;
+}
+.bpmSelectionButton:hover {
+  border: 3px outset #686864;
+}
+.verySlow {
+  background-color: #34acd8;
+}
+.slow {
+  background-color: #34d8b7;
+}
+.normal {
+  background-color: #65c456;
+}
+.fast {
+  background-color: #e2dd34;
 }
 .song-list-wrapper {
   width: 80%;

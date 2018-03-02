@@ -247,6 +247,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
     }
     startSongButton.style.display = null;
     document.getElementsByClassName('speedSelectionMessage')[0].style.display = 'none';
+    document.getElementsByClassName('fingerboard-wrapper')[0].style.display = null;
     let speed = event.target.dataset.speed;
     if (speed === 'verySlow') {
       intervalTiming = 10;

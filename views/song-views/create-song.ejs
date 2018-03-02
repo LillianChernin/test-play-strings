@@ -2,8 +2,8 @@
 
 <fieldset class="addNewSongForm">
   <h3>Add New Song</h3>
-  <textarea name="name" rows="1" cols="40" placeholder="Song name..."></textarea>
-  <select name="difficulty" required>
+  <textarea class="songNameInput" name="name" rows="1" cols="40" placeholder="Song name..."></textarea>
+  <select class="difficultySelect" name="difficulty" required>
     <option value="">Difficulty...</option>
     <option value="1">1</option>
     <option value="2">2</option>
@@ -13,7 +13,11 @@
   </select>
   <fieldset>
     <h4>Add Note to Song</h4>
-    <select name="note" required>
+    <div>
+      <ul>
+      </ul>
+    </div>
+    <select class="noteSelect" name="note" required>
       <option value="">Note</option>
       <option value="a">A</option>
       <option value="b">B</option>
@@ -23,28 +27,14 @@
       <option value="f">F</option>
       <option value="g">G</option>
     </select>
-    <select name="octave" required>
+    <select class="octaveSelect" name="octave" required>
       <option value="">Octave</option>
       <option value="2">2</option>
       <option value="3">3</option>
       <option value="4">4</option>
       <option value="5">5</option>
     </select>
-    <select name="length" required>
-      <option value="">Length of Note in Beats</option>
-      <option value=".25">.25</option>
-      <option value=".5">.5</option>
-      <option value=".75">.75</option>
-      <option value="1">1</option>
-      <option value="1.25">1.25</option>
-      <option value="1.5">1.5</option>
-      <option value="1.75">1.75</option>
-      <option value="2">2</option>
-      <option value="2.25">2.25</option>
-      <option value="2.5">2.5</option>
-      <option value="2.75">2.75</option>
-      <option value="3">3</option>
-    </select>
+    <input class="lengthSelect" type="number" placeholder="Length of Note in Beats" step="0.25" min="0.25" max="12">
     <button class="addNoteButton">Add Note</button>
   </fieldset>
   <button class="submitNewSongButton">Submit Song</button>
