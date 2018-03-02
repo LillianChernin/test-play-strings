@@ -218,12 +218,28 @@ function updateGameArea() {
 
 
 document.addEventListener("DOMContentLoaded", (event) => {
+  let deleteSongButton = document.getElementsByClassName('deleteSongButton')[0];
   let startSongButton = document.getElementsByClassName('startSong')[0];
   let pauseButton = document.getElementsByClassName('pauseButton')[0];
   let resumeButton = document.getElementsByClassName('resumeButton')[0];
-  let getRequestUrl = '/api/v1' + document.location.pathname;
+  let ajaxRequestUrl = '/api/v1' + document.location.pathname;
   let currentSongIdNum = document.location.pathname.split('/')[2];
-  startSongButton.addEventListener('click', (event) =>{
+  deleteSongButton.addEventListener('click', (event) => {
+    let confirm = prompt('Please confirm deletion of this song by entering the deletion keyword and clicking OK');
+    if (confirm === 'deleteallthethings') {
+      $.ajax({
+        method:'DELETE',
+        url: ajaxRequestUrl,
+        success: () => {
+          alert('Song has been deleted!');
+        },
+        error: () => {
+          console.log('error deleting technique');
+        }
+      })
+    }
+  })
+  startSongButton.addEventListener('click', (event) => {
     event.target.style.display = "none";
     pauseButton.style.display = null;
     startGame();
@@ -261,7 +277,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
   })
   $.ajax({
     method: "GET",
-    url: getRequestUrl,
+    url: ajaxRequestUrl,
     success: (json) => {
       let currentSongRawData = json.songData;
       for (let i = 0; i < currentSongRawData.length; i++) {
@@ -285,5 +301,4 @@ document.addEventListener("DOMContentLoaded", (event) => {
       console.log('error retrieving current song data');
     }
   })
-
 });

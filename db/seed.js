@@ -1,6 +1,120 @@
 const mongoose = require('mongoose');
 const db = require('../models');
 
+const lightRow = [
+  ['c5', 1],
+  ['a4', 1],
+  ['a4', 2],
+  ['bb4', 1],
+  ['g4', 1],
+  ['g4', 2],
+  ['f4', 1],
+  ['g4', 1],
+  ['a4', 1],
+  ['bb4', 1],
+  ['c5', 1],
+  ['c5', 1],
+  ['c5', 2],
+  ['c5', 1],
+  ['a4', 1],
+  ['a4', 1],
+  ['a4', 1],
+  ['bb4', 1],
+  ['g4', 1],
+  ['g4', 1],
+  ['g4', 1],
+  ['f4', 1],
+  ['a4', 1],
+  ['c5', 1],
+  ['c5', 1],
+  ['a4', 1],
+  ['a4', 1],
+  ['a4', 2],
+  ['g4', 1],
+  ['g4', 1],
+  ['g4', 1],
+  ['g4', 1],
+  ['g4', 1],
+  ['a4', 1],
+  ['bb4', 2],
+  ['a4', 1],
+  ['a4', 1],
+  ['a4', 1],
+  ['a4', 1],
+  ['a4', 1],
+  ['bb4', 1],
+  ['c5', 2],
+  ['c5', 1],
+  ['a4', 1],
+  ['a4', 1],
+  ['a4', 1],
+  ['bb4', 1],
+  ['g4', 1],
+  ['g4', 1],
+  ['g4', 1],
+  ['f4', 1],
+  ['a4', 1],
+  ['c5', 1],
+  ['c5', 1],
+  ['a4', 1],
+  ['a4', 1],
+  ['a4', 2]
+]
+
+const lightlyRow = {
+  name: "Lightly Row",
+  difficulty: 2,
+  songData: []
+}
+for (let i = 0; i < lightRow.length; i++) {
+  let currentNote = {};
+  currentNote.pitch = lightRow[i][0];
+  currentNote.length = lightRow[i][1];
+  lightlyRow.songData.push(currentNote);
+}
+
+
+
+const maryLamb = [
+  ['a4', 1.5],
+  ['g4', .5],
+  ['f4', 1],
+  ['g4', 1],
+  ['a4', 1],
+  ['a4', 1],
+  ['a4', 2],
+  ['g4', 1],
+  ['g4', 1],
+  ['g4', 2],
+  ['a4', 1],
+  ['c5', 1],
+  ['c5', 2],
+  ['a4', 1.5],
+  ['g4', .5],
+  ['f4', 1],
+  ['g4', 1],
+  ['a4', 1],
+  ['a4', 1],
+  ['a4', 2],
+  ['g4', 1],
+  ['g4', .5],
+  ['g4', .5],
+  ['a4', 1],
+  ['g4', 1],
+  ['f4', 4]
+]
+const maryHadALittleLamb = {
+  name: "Mary Had A Little Lamb",
+  difficulty: 2,
+  songData: []
+}
+for (let i = 0; i < maryLamb.length; i++) {
+  let currentNote = {};
+  currentNote.pitch = maryLamb[i][0];
+  currentNote.length = maryLamb[i][1];
+  maryHadALittleLamb.songData.push(currentNote);
+}
+
 const princessZeldaTheme = [
   ['b3', 2],
   ['d4', 1],
@@ -250,12 +364,12 @@ const twinkleTwinkle = {
   songData: twinkleTwinkleSongData
 }
 
-const songList = [zeldaTheme, twinkleTwinkle];
+const songList = [lightlyRow];
 
 db.Song.create(songList, (err, songs) => {
   if (err) {
     return console.log('ERROR ' + err);
   }
-  console.log('created ' + songs.length);
+  console.log('created ' + songs.length + 'songs');
   process.exit();
 })

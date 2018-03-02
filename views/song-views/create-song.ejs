@@ -14,17 +14,22 @@
   <fieldset>
     <h4>Add Note to Song</h4>
     <div>
-      <ul>
+      <ul class="addNoteUl">
       </ul>
     </div>
     <select class="noteSelect" name="note" required>
       <option value="">Note</option>
+      <option value="ab">Ab</option>
       <option value="a">A</option>
+      <option value="bb">Bb</option>
       <option value="b">B</option>
       <option value="c">C</option>
+      <option value="db">Db</option>
       <option value="d">D</option>
+      <option value="eb">Eb</option>
       <option value="e">E</option>
       <option value="f">F</option>
+      <option value="gb">Gb</option>
       <option value="g">G</option>
     </select>
     <select class="octaveSelect" name="octave" required>
@@ -39,5 +44,6 @@
   </fieldset>
   <button class="submitNewSongButton">Submit Song</button>
 </fieldset>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="/js/create-song.js"></script>
 <% include ../partials/footer %>
