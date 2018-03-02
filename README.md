@@ -1,3 +1,21 @@
+# Play Strings
+
+## Link to Deployed Site
+
+https://play-strings.herokuapp.com/
+
+## Description
+
+"Play Strings" is a web application that teaches you how to play the violin in a fun and easy way.  It has a simple colorful user interface that allows a player to play a song on the violin without having to know how to play or how to read sheet music.
+
+## Motivation
+
+Learning how to play a bowed string instrument is very rewarding but the learning curve can be very steep.  This game is designed to simplify the learning process and make the early part of learning a musical instrument more fun.
+
+## Link to Project Trello
+
+https://trello.com/b/BOl5YgSw/play-strings-game-final-project
+
 ## Technologies
 
 - Node.js
