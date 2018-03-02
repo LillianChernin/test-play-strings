@@ -13,12 +13,15 @@ var keyTracker = 0;
 var timing = 120;
 var intervalTiming = 5;
 const currentSong = [];
+var myScore;
+var scoreTracker = 0;
 var paused = false;
 const songAudio = document.getElementById('songAudio');
 const songScrollBox = document.getElementsByClassName('song-scroll-box-wrapper')[0];
 
 function startGame() {
     playLine = new component(10, 360, "#6dffd8", 200, 0);
+    myScore = new component("30px", "Consolas", "black", 280, 40, "text");
     myGameArea.start();
 }
 
@@ -39,6 +42,7 @@ var myGameArea = {
 }
 
 function component(width, height, color, x, y, type, key, pitch) {
+    this.score = 0;
     this.width = width;
     this.height = height;
     this.color = color;
@@ -103,6 +107,23 @@ function component(width, height, color, x, y, type, key, pitch) {
       }
       return stop;
     }
+    this.evaluatePitch = (currentDetectedPitch, currentNoteSciPitch) => {
+      let highEnd = sciPitchToHertz[currentNoteSciPitch] + (sciPitchToHertz[currentNoteSciPitch] * .05);
+      let lowEnd = sciPitchToHertz[currentNoteSciPitch] - (sciPitchToHertz[currentNoteSciPitch] * .05);
+      let currentDetectedPitchOneOctaveDown = currentDetectedPitch / 2;
+      let currentDetectedPitchTwoOctavesDown = currentDetectedPitchOneOctaveDown / 2;
+      let currentDetectedPitchThreeOctavesDown = currentDetectedPitchTwoOctavesDown / 2;
+      if (currentDetectedPitch < highEnd && currentDetectedPitch > lowEnd) {
+        return true;
+      } else if (currentDetectedPitchOneOctaveDown < highEnd && currentDetectedPitchOneOctaveDown > lowEnd) {
+        return true;
+      } else if (currentDetectedPitchTwoOctavesDown < highEnd && currentDetectedPitchTwoOctavesDown > lowEnd) {
+        return true;
+      } else if (currentDetectedPitchThreeOctavesDown < highEnd && currentDetectedPitchThreeOctavesDown > lowEnd) {
+        return true;
+      }
+      return false;
+    }
 }
 
 function updateGameArea() {
@@ -110,6 +131,10 @@ function updateGameArea() {
     var x, height, gap, minHeight, maxHeight, minGap, maxGap, noteWidth, intervalLength, clearedX, clearedColor, currentInterval, distanceToNextNote;
     for (var i = 0; i < myObstacles.length; i += 1) {
         if (playLine.crashWith(myObstacles[i]) && (myObstacles[i].type !== "text")) {
+          updatePitch();
+          if (playLine.evaluatePitch(currentNotePitchDetected, myObstacles[i].pitch)) {
+            scoreTracker++;
+          }
           myObstacles[i].width--;
           myObstacles[i].x++;
           if (clearedObstacles[myObstacles[i].key]) {
@@ -182,7 +207,7 @@ function updateGameArea() {
         let fretNoXPos = x + (noteWidth / 2);
         let fretNo = new component("30px", "Consolas", "black", fretNoXPos, 215, "text", keyTracker)
         fretNo.text = currentSong[beatCounter].fret;
-        myObstacles.push(new component(noteWidth, 50, noteColor, x, 180, noteLength, keyTracker));
+        myObstacles.push(new component(noteWidth, 50, noteColor, x, 180, noteLength, keyTracker, notePitch));
         myObstacles.push(fretNo);
         myNotes.push(new component(noteWidth, 50, "rgba(0,0,0,0)", x, 180, noteLength, keyTracker, notePitch))
         beatCounter++;
@@ -212,6 +237,8 @@ function updateGameArea() {
         clearedObstacles[i].x += -1;
         clearedObstacles[i].update();
     }
+    myScore.text="SCORE: " + scoreTracker;
+    myScore.update();
     playLine.update();
   }
 }
@@ -274,6 +301,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
     } else if (speed === 'fast') {
       intervalTiming = 3;
     }
+    toggleLiveInput();
   })
   $.ajax({
     method: "GET",
