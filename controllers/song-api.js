@@ -14,11 +14,24 @@ const show = (req, res) => {
 }
 
 const post = (req, res) => {
-  let newSong = new db.Song(req.body);
+  console.log(req.body);
+  let newSong = new db.Song();
+  newSong.name = req.body.name;
+  newSong.difficulty = req.body.difficulty;
+  newSong.songData = [];
+  for (let i = 0; i < req.body.arrayLength; i++) {
+    let noteObject = {};
+    let currentPitchKey = 'songData[' + i + '][pitch]';
+    let currentLengthKey = 'songData[' + i + '][length]';
+    noteObject.pitch = req.body[currentPitchKey];
+    noteObject.length = req.body[currentLengthKey];
+    newSong.songData.push(noteObject);
+  }
   newSong.save((err, song) => {
     if (err) {
       res.status(500).send(err);
     }
+    res.json(newSong);
   });
 }
 

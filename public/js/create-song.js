@@ -11,22 +11,22 @@ document.addEventListener("DOMContentLoaded", (event) => {
     newNoteToBeAdded.pitch = (document.getElementsByClassName('noteSelect')[0].value).toLowerCase() + document.getElementsByClassName('octaveSelect')[0].value;
     newNoteToBeAdded.length = Number(document.getElementsByClassName('lengthSelect')[0].value);
     newSongNoteList.push(newNoteToBeAdded);
-    console.log(newSongNoteList);
-    console.log(document.getElementsByClassName('noteSelect')[0].value);
-    console.log(document.getElementsByClassName('octaveSelect')[0].value);
-    console.log(document.getElementsByClassName('lengthSelect')[0].value);
   })
   submitNewSongButton.addEventListener('click', (event) => {
     let newSongTitle = document.getElementsByClassName('songNameInput')[0].value;
     let newSongDifficulty = document.getElementsByClassName('difficultySelect')[0].value;
     console.log('button is working')
+    console.log(newSongNoteList)
+    console.log(newSongTitle)
+    console.log(newSongDifficulty)
     $.ajax({
       method: 'POST',
       url: '/api/v1/songs',
       data: {
         name: newSongTitle,
         difficulty: newSongDifficulty,
-        songData: newSongNoteList
+        songData: newSongNoteList,
+        arrayLength: newSongNoteList.length
       },
       success: (json) => {
         alert('song was successfully added to db!');
