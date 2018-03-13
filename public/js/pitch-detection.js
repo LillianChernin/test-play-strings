@@ -294,7 +294,7 @@ function updatePitch( time ) {
 	var cycles = new Array;
 	analyser.getFloatTimeDomainData( buf );
 	var ac = autoCorrelate( buf, audioContext.sampleRate );
-  console.log(ac);
+  // console.log(ac);
 	// TODO: Paint confidence meter on canvasElem here.
 
 	// if (DEBUGCANVAS) {  // This draws the current waveform, useful for debugging

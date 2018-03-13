@@ -16,7 +16,9 @@ const currentSong = [];
 var myScore;
 var scoreTracker = 0;
 var paused = false;
-const songAudio = document.getElementById('songAudio');
+let previousNoteAudio;
+let currentNoteAudio;
+// const songAudio = document.getElementById('songAudio');
 const songScrollBox = document.getElementsByClassName('song-scroll-box-wrapper')[0];
 
 function startGame() {
@@ -162,9 +164,19 @@ function updateGameArea() {
     }
     if (myNotes[0]) {
       if (playLine.startNote(myNotes[0])) {
-        let srcUrl = "../mp3/" + myNotes[0].pitch + ".mp3"
-        songAudio.src = srcUrl;
-        songAudio.play();
+        // console.log(myNotes);
+        if (currentNoteAudio) {
+          previousNoteAudio = currentNoteAudio;
+        }
+        currentNoteAudio = document.getElementById('songAudio-' + myNotes[0].pitch);
+        if (previousNoteAudio) {
+          previousNoteAudio.pause();
+        }
+        // let srcUrl = "../mp3/" + myNotes[0].pitch + ".mp3"
+        // songAudio.src = srcUrl;
+        // songAudio.play();
+        currentNoteAudio.currentTime = 2;
+        currentNoteAudio.play();
         currentNote = myNotes[0];
         playedNotes.push(currentNote);
         myNotes.shift();
@@ -191,7 +203,8 @@ function updateGameArea() {
           previousNote.style.color = 'white';
           previousNote.style.background = 'white';
           paused = true;
-          songAudio.pause();
+          currentNoteAudio.pause();
+          // songAudio.pause();
         }
       }
     }
@@ -275,13 +288,15 @@ document.addEventListener("DOMContentLoaded", (event) => {
     event.target.style.display = "none";
     resumeButton.style.display = null;
     paused = true;
-    songAudio.pause();
+    currentNoteAudio.pause();
+    // songAudio.pause();
   })
   resumeButton.addEventListener('click', (event) => {
     event.target.style.display = 'none';
     pauseButton.style.display = null;
     paused = false;
-    songAudio.play();
+    // songAudio.play();
+    currentNoteAudio.play();
   })
   $('.bpmSelectionButton').on('click', (event) => {
     let speedButtons = document.getElementsByClassName('bpmSelectionButton');
