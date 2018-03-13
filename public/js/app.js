@@ -133,7 +133,7 @@ function updateGameArea() {
     var x, height, gap, minHeight, maxHeight, minGap, maxGap, noteWidth, intervalLength, clearedX, clearedColor, currentInterval, distanceToNextNote;
     for (var i = 0; i < myObstacles.length; i += 1) {
         if (playLine.crashWith(myObstacles[i]) && (myObstacles[i].type !== "text")) {
-          updatePitch();
+          // updatePitch();
           if (playLine.evaluatePitch(currentNotePitchDetected, myObstacles[i].pitch)) {
             scoreTracker++;
           }
@@ -316,7 +316,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
     } else if (speed === 'fast') {
       intervalTiming = 3;
     }
-    toggleLiveInput();
+    // toggleLiveInput();
   })
   $.ajax({
     method: "GET",
