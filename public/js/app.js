@@ -74,9 +74,6 @@ function component(width, height, color, x, y, type, key, pitch) {
         var othertop = otherobj.y;
         var otherbottom = otherobj.y + (otherobj.height);
         var crash = false;
-        // if ((mybottom < othertop) || (mytop > otherbottom) || (myright < otherleft) || (myleft > otherright)) {
-        //     crash = false;
-        // }
         if (myright > otherleft) {
             crash = true;
         }
@@ -133,7 +130,7 @@ function updateGameArea() {
     var x, height, gap, minHeight, maxHeight, minGap, maxGap, noteWidth, intervalLength, clearedX, clearedColor, currentInterval, distanceToNextNote;
     for (var i = 0; i < myObstacles.length; i += 1) {
         if (playLine.crashWith(myObstacles[i]) && (myObstacles[i].type !== "text")) {
-          // updatePitch();
+          updatePitch();
           if (playLine.evaluatePitch(currentNotePitchDetected, myObstacles[i].pitch)) {
             scoreTracker++;
           }
@@ -157,14 +154,11 @@ function updateGameArea() {
           }
           if(playLine.passWith(myObstacles[i]) && (myObstacles[i].type !== "text")) {
             myObstacles.splice(i,1);
-            // let timePassed = new Date();
-            // console.log(timePassed + ' ' + timePassed.getMilliseconds());
           }
         }
     }
     if (myNotes[0]) {
       if (playLine.startNote(myNotes[0])) {
-        // console.log(myNotes);
         if (currentNoteAudio) {
           previousNoteAudio = currentNoteAudio;
         }
@@ -316,7 +310,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
     } else if (speed === 'fast') {
       intervalTiming = 3;
     }
-    // toggleLiveInput();
+    toggleLiveInput();
   })
   $.ajax({
     method: "GET",
