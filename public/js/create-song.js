@@ -1,6 +1,7 @@
+let newSongNoteList = [];
+
 document.addEventListener("DOMContentLoaded", (event) => {
   let addNoteButton = document.getElementsByClassName('addNoteButton')[0];
-  let newSongNoteList = [];
   let submitNewSongButton = document.getElementsByClassName('submitNewSongButton')[0];
   addNoteButton.addEventListener('click', (event) => {
     let newNoteToBeAdded = {};

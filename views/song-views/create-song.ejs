@@ -19,10 +19,6 @@
     </div>
     <select class="noteSelect" name="note" required>
       <option value="">Note</option>
-      <option value="ab">Ab</option>
-      <option value="a">A</option>
-      <option value="bb">Bb</option>
-      <option value="b">B</option>
       <option value="c">C</option>
       <option value="db">Db</option>
       <option value="d">D</option>
@@ -31,6 +27,10 @@
       <option value="f">F</option>
       <option value="gb">Gb</option>
       <option value="g">G</option>
+      <option value="ab">Ab</option>
+      <option value="a">A</option>
+      <option value="bb">Bb</option>
+      <option value="b">B</option>
       <option value="rest">Rest</option>
     </select>
     <select class="octaveSelect" name="octave" required>
@@ -45,6 +45,71 @@
   </fieldset>
   <button class="submitNewSongButton">Submit Song</button>
 </fieldset>
+<button class="demoSongButton">Demo Song</button>
+<div class="bpm-selection-demo-wrapper" style="display: none">
+  <h3 class="speedSelectionMessage">Select play speed below:</h3>
+  <button class="bpmSelectionButton verySlow" data-speed="verySlow">Very Slow</button>
+  <button class="bpmSelectionButton slow" data-speed="slow">Slow</button>
+  <button class="bpmSelectionButton normal" data-speed="normal">Normal</button>
+  <button class="bpmSelectionButton fast" data-speed="fast">Fast</button>
+</div>
+<br>
+<button class='startSong' style='display: none'>Start Song</button>
+<button class='pauseButton' style='display: none'>Pause Song</button>
+<button class='resumeButton' style='display: none'>Resume Song</button>
+<% include ../partials/fingerboard %>
+<div class="song-scroll-box-wrapper" style="display: none">
+  <audio id="songAudio-a2" src="../mp3/a2.mp3"></audio>
+  <audio id="songAudio-a3" src="../mp3/a3.mp3"></audio>
+  <audio id="songAudio-a4" src="../mp3/a4.mp3"></audio>
+  <audio id="songAudio-a5" src="../mp3/a5.mp3"></audio>
+  <audio id="songAudio-ab2" src="../mp3/ab2.mp3"></audio>
+  <audio id="songAudio-ab3" src="../mp3/ab3.mp3"></audio>
+  <audio id="songAudio-ab4" src="../mp3/ab4.mp3"></audio>
+  <audio id="songAudio-ab5" src="../mp3/ab5.mp3"></audio>
+  <audio id="songAudio-b2" src="../mp3/b2.mp3"></audio>
+  <audio id="songAudio-b3" src="../mp3/b3.mp3"></audio>
+  <audio id="songAudio-b4" src="../mp3/b4.mp3"></audio>
+  <audio id="songAudio-b5" src="../mp3/b5.mp3"></audio>
+  <audio id="songAudio-bb2" src="../mp3/bb2.mp3"></audio>
+  <audio id="songAudio-bb3" src="../mp3/bb3.mp3"></audio>
+  <audio id="songAudio-bb4" src="../mp3/bb4.mp3"></audio>
+  <audio id="songAudio-bb5" src="../mp3/bb5.mp3"></audio>
+  <audio id="songAudio-c2" src="../mp3/c2.mp3"></audio>
+  <audio id="songAudio-c3" src="../mp3/c3.mp3"></audio>
+  <audio id="songAudio-c4" src="../mp3/c4.mp3"></audio>
+  <audio id="songAudio-c5" src="../mp3/c5.mp3"></audio>
+  <audio id="songAudio-d2" src="../mp3/d2.mp3"></audio>
+  <audio id="songAudio-d3" src="../mp3/d3.mp3"></audio>
+  <audio id="songAudio-d4" src="../mp3/d4.mp3"></audio>
+  <audio id="songAudio-d5" src="../mp3/d5.mp3"></audio>
+  <audio id="songAudio-db2" src="../mp3/db2.mp3"></audio>
+  <audio id="songAudio-db3" src="../mp3/db3.mp3"></audio>
+  <audio id="songAudio-db4" src="../mp3/db4.mp3"></audio>
+  <audio id="songAudio-db5" src="../mp3/db5.mp3"></audio>
+  <audio id="songAudio-e2" src="../mp3/e2.mp3"></audio>
+  <audio id="songAudio-e3" src="../mp3/e3.mp3"></audio>
+  <audio id="songAudio-e4" src="../mp3/e4.mp3"></audio>
+  <audio id="songAudio-e5" src="../mp3/e5.mp3"></audio>
+  <audio id="songAudio-eb2" src="../mp3/eb2.mp3"></audio>
+  <audio id="songAudio-eb3" src="../mp3/eb3.mp3"></audio>
+  <audio id="songAudio-eb4" src="../mp3/eb4.mp3"></audio>
+  <audio id="songAudio-eb5" src="../mp3/eb5.mp3"></audio>
+  <audio id="songAudio-f2" src="../mp3/f2.mp3"></audio>
+  <audio id="songAudio-f3" src="../mp3/f3.mp3"></audio>
+  <audio id="songAudio-f4" src="../mp3/f4.mp3"></audio>
+  <audio id="songAudio-f5" src="../mp3/f5.mp3"></audio>
+  <audio id="songAudio-g2" src="../mp3/g2.mp3"></audio>
+  <audio id="songAudio-g3" src="../mp3/g3.mp3"></audio>
+  <audio id="songAudio-g4" src="../mp3/g4.mp3"></audio>
+  <audio id="songAudio-g5" src="../mp3/g5.mp3"></audio>
+  <audio id="songAudio-gb2" src="../mp3/gb2.mp3"></audio>
+  <audio id="songAudio-gb3" src="../mp3/gb3.mp3"></audio>
+  <audio id="songAudio-gb4" src="../mp3/gb4.mp3"></audio>
+  <audio id="songAudio-gb5" src="../mp3/gb5.mp3"></audio>
+</div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="/js/create-song.js"></script>
+<script src="/js/note-data.js"></script>
+<script src="/js/demo-song.js"></script>
 <% include ../partials/footer %>
