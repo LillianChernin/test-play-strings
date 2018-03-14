@@ -29,11 +29,11 @@ https://trello.com/b/BOl5YgSw/play-strings-game-final-project
 
 ### Example Game Play View
 
-![example game play view](https://github.com/LillianChernin/play-strings/blob/master/docs/assets/images/example-song-view.png)
+![example game play view](https://github.com/LillianChernin/test-play-strings/blob/master/docs/assets/images/example-song-view.png)
 
 ### Example Song List view
 
-![example song list view](https://github.com/LillianChernin/play-strings/blob/master/docs/assets/images/song-list-view.png)
+![example song list view](https://github.com/LillianChernin/test-play-strings/blob/master/docs/assets/images/song-list-view.png)
 
 ## MVP User Stories
 
