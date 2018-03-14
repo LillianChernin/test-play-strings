@@ -148,6 +148,8 @@ function updateGameArea() {
               clearedColor = '#141256';
             } else if (myObstacles[i].color === yellow) {
               clearedColor = '#665e07';
+            } else if (myObstacles[i].color === 'rgba(0,0,0,0)') {
+              clearedColor = 'rgba(0,0,0,0)';
             }
             clearedX = myObstacles[i].x;
             clearedObstacles.push(new component(1, 50, clearedColor, clearedX, 180, 0, keyTracker))
@@ -162,15 +164,19 @@ function updateGameArea() {
         if (currentNoteAudio) {
           previousNoteAudio = currentNoteAudio;
         }
-        currentNoteAudio = document.getElementById('songAudio-' + myNotes[0].pitch);
         if (previousNoteAudio) {
           previousNoteAudio.pause();
         }
-        // let srcUrl = "../mp3/" + myNotes[0].pitch + ".mp3"
-        // songAudio.src = srcUrl;
-        // songAudio.play();
-        currentNoteAudio.currentTime = 2;
-        currentNoteAudio.play();
+        if (myNotes[0].pitch === 'rest') {
+          currentNoteAudio = null;
+        } else {
+          currentNoteAudio = document.getElementById('songAudio-' + myNotes[0].pitch);
+          // let srcUrl = "../mp3/" + myNotes[0].pitch + ".mp3"
+          // songAudio.src = srcUrl;
+          // songAudio.play();
+          currentNoteAudio.currentTime = 2;
+          currentNoteAudio.play();
+        }
         currentNote = myNotes[0];
         playedNotes.push(currentNote);
         myNotes.shift();
@@ -179,17 +185,32 @@ function updateGameArea() {
     if (playedNotes.length > 0) {
       if (playLine.stopNote(playedNotes[0])) {
         if (myNotes.length > 0) {
-          let previousNoteFromTable = sciPitchToStrAndFretViolin[playedNotes[0].pitch];
-          let previousNoteFretAndColor = previousNoteFromTable.color[0] + previousNoteFromTable.fret;
-          previousNote = document.getElementsByClassName(previousNoteFretAndColor)[0];
-          previousNote.style.color = 'white';
-          previousNote.style.background = 'white';
-          let nextNoteFromTable = sciPitchToStrAndFretViolin[myNotes[0].pitch];
-          let nextNoteFretAndColor = nextNoteFromTable.color[0] + nextNoteFromTable.fret;
-          let nextNote = document.getElementsByClassName(nextNoteFretAndColor)[0];
-          nextNote.style.color = 'black';
-          nextNote.style.background = '#3dffe2';
-          playedNotes.shift();
+          if (myNotes[0].pitch !== 'rest' && playedNotes[0].pitch !== 'rest') {
+            let previousNoteFromTable = sciPitchToStrAndFretViolin[playedNotes[0].pitch];
+            let previousNoteFretAndColor = previousNoteFromTable.color[0] + previousNoteFromTable.fret;
+            let previousNote = document.getElementsByClassName(previousNoteFretAndColor)[0];
+            previousNote.style.color = 'white';
+            previousNote.style.background = 'white';
+            let nextNoteFromTable = sciPitchToStrAndFretViolin[myNotes[0].pitch];
+            let nextNoteFretAndColor = nextNoteFromTable.color[0] + nextNoteFromTable.fret;
+            let nextNote = document.getElementsByClassName(nextNoteFretAndColor)[0];
+            nextNote.style.color = 'black';
+            nextNote.style.background = '#3dffe2';
+            playedNotes.shift();
+          } else if (playedNotes[0].pitch !== 'rest') {
+            let previousNoteFromTable = sciPitchToStrAndFretViolin[playedNotes[0].pitch];
+            let previousNoteFretAndColor = previousNoteFromTable.color[0] + previousNoteFromTable.fret;
+            let previousNote = document.getElementsByClassName(previousNoteFretAndColor)[0];
+            previousNote.style.color = 'white';
+            previousNote.style.background = 'white';
+          } else if (myNotes[0].pitch !== 'rest') {
+            let nextNoteFromTable = sciPitchToStrAndFretViolin[myNotes[0].pitch];
+            let nextNoteFretAndColor = nextNoteFromTable.color[0] + nextNoteFromTable.fret;
+            let nextNote = document.getElementsByClassName(nextNoteFretAndColor)[0];
+            nextNote.style.color = 'black';
+            nextNote.style.background = '#3dffe2';
+            playedNotes.shift();
+          }
         } else {
           let previousNoteFromTable = sciPitchToStrAndFretViolin[playedNotes[0].pitch];
           let previousNoteFretAndColor = previousNoteFromTable.color[0] + previousNoteFromTable.fret;
@@ -330,6 +351,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
           currentNoteData.color = blue;
         } else if (sciPitchToStrAndFretViolin[currentSongRawData[i].pitch].color === 'yellow') {
           currentNoteData.color = yellow;
+        } else if (sciPitchToStrAndFretViolin[currentSongRawData[i].pitch].color === 'none') {
+          currentNoteData.color = 'rgba(0,0,0,0)';
         }
         currentSong.push(currentNoteData);
       }

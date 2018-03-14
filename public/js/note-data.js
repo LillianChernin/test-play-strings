@@ -218,6 +218,10 @@ const sciPitchToStrAndFretViolin = {
   b5: {
     color: 'green',
     fret: 7
+  },
+  rest: {
+    color: 'none',
+    fret: ''
   }
 }
 
@@ -337,6 +341,10 @@ const sciPitchToStrAndFretViola = {
   e5: {
     color: 'green',
     fret: 7
+  },
+  rest: {
+    color: 'none',
+    fret: ''
   }
 }
 
@@ -457,4 +465,8 @@ const sciPitchToStrAndFretCello = {
     color: 'green',
     fret: 7
   },
+  rest: {
+    color: 'none',
+    fret: ''
+  }
 }
