@@ -182,16 +182,24 @@ a {
   margin: 0 auto;
   text-align: center;
 }
+.song-instrument-list-wrapper {
+  display: inline-block;
+  text-align: center;
+}
+.song-instrument-name {
+  font-size: 16px;
+}
 .song-list-spacer {
-  width: 18%;
+  width: 10%;
   display: inline-block;
 }
 .song-list-header-spacer {
-  width: 35%;
+  width: 16%;
   display: inline-block;
 }
 .difficulty-stars-display {
   display: block;
+  padding: 2px;
 }
 .g6 {
   left: 16px;

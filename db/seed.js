@@ -1,6 +1,164 @@
 const mongoose = require('mongoose');
 const db = require('../models');
 
+const violaOdeToJoy = [
+  ['b3', 1],
+  ['b3', 1],
+  ['c4', 1],
+  ['d4', 1],
+  ['d4', 1],
+  ['c4', 1],
+  ['b3', 1],
+  ['a3', 1],
+  ['g3', 1],
+  ['g3', 1],
+  ['a3', 1],
+  ['b3', 1],
+  ['b3', 1.5],
+  ['a3', .5],
+  ['a3', 2],
+  ['b3', 1],
+  ['b3', 1],
+  ['c4', 1],
+  ['d4', 1],
+  ['d4', 1],
+  ['c4', 1],
+  ['b3', 1],
+  ['a3', 1],
+  ['g3', 1],
+  ['g3', 1],
+  ['a3', 1],
+  ['b3', 1],
+  ['a3', 1.5],
+  ['g3', .5],
+  ['g3', 2],
+  ['a3', 1],
+  ['a3', 1],
+  ['b3', 1],
+  ['g3', 1],
+  ['a3', 1],
+  ['b3', .5],
+  ['c4', .5],
+  ['b3', 1],
+  ['g3', 1],
+  ['a3', 1],
+  ['b3', .5],
+  ['c4', .5],
+  ['b3', 1],
+  ['a3', 1],
+  ['g3', 1],
+  ['a3', 1],
+  ['d3', 2],
+  ['b3', 1],
+  ['b3', 1],
+  ['c4', 1],
+  ['d4', 1],
+  ['d4', 1],
+  ['c4', 1],
+  ['b3', 1],
+  ['a3', 1],
+  ['g3', 1],
+  ['g3', 1],
+  ['a3', 1],
+  ['b3', 1],
+  ['a3', 1.5],
+  ['g3', .5],
+  ['g3', 2]
+]
+
+const vaOdeToJoy = {
+  name: "Ode To Joy",
+  difficulty: 2,
+  songData: [],
+  instrument: 'viola'
+}
+for (let i = 0; i < violaOdeToJoy.length; i++) {
+  let currentNote = {};
+  currentNote.pitch = violaOdeToJoy[i][0];
+  currentNote.length = violaOdeToJoy[i][1];
+  vaOdeToJoy.songData.push(currentNote);
+}
+
+
+
+const celloOdeToJoy = [
+  ['b2', 1],
+  ['b2', 1],
+  ['c3', 1],
+  ['d3', 1],
+  ['d3', 1],
+  ['c3', 1],
+  ['b2', 1],
+  ['a2', 1],
+  ['g2', 1],
+  ['g2', 1],
+  ['a2', 1],
+  ['b2', 1],
+  ['b2', 1.5],
+  ['a2', .5],
+  ['a2', 2],
+  ['b2', 1],
+  ['b2', 1],
+  ['c3', 1],
+  ['d3', 1],
+  ['d3', 1],
+  ['c3', 1],
+  ['b2', 1],
+  ['a2', 1],
+  ['g2', 1],
+  ['g2', 1],
+  ['a2', 1],
+  ['b2', 1],
+  ['a2', 1.5],
+  ['g2', .5],
+  ['g2', 2],
+  ['a2', 1],
+  ['a2', 1],
+  ['b2', 1],
+  ['g2', 1],
+  ['a2', 1],
+  ['b2', .5],
+  ['c3', .5],
+  ['b2', 1],
+  ['g2', 1],
+  ['a2', 1],
+  ['b2', .5],
+  ['c3', .5],
+  ['b2', 1],
+  ['a2', 1],
+  ['g2', 1],
+  ['a2', 1],
+  ['d2', 2],
+  ['b2', 1],
+  ['b2', 1],
+  ['c3', 1],
+  ['d3', 1],
+  ['d3', 1],
+  ['c3', 1],
+  ['b2', 1],
+  ['a2', 1],
+  ['g2', 1],
+  ['g2', 1],
+  ['a2', 1],
+  ['b2', 1],
+  ['a2', 1.5],
+  ['g2', .5],
+  ['g2', 2]
+]
+
+const celOdeToJoy = {
+  name: "Ode To Joy",
+  difficulty: 2,
+  songData: [],
+  instrument: 'cello'
+}
+for (let i = 0; i < celloOdeToJoy.length; i++) {
+  let currentNote = {};
+  currentNote.pitch = celloOdeToJoy[i][0];
+  currentNote.length = celloOdeToJoy[i][1];
+  celOdeToJoy.songData.push(currentNote);
+}
+
 const lightRow = [
   ['c5', 1],
   ['a4', 1],
@@ -218,6 +376,8 @@ const princessZeldaTheme = [
   ['g5', 3]
 ]
 
+
+
 const zeldaTheme = {
   name: "Princess Zelda's Theme",
   difficulty: 3,
@@ -368,7 +528,7 @@ const twinkleTwinkle = {
   instrument: 'violin'
 }
 
-const songList = [lightlyRow, twinkleTwinkle, zeldaTheme, maryHadALittleLamb];
+const songList = [lightlyRow, twinkleTwinkle, zeldaTheme, maryHadALittleLamb, vaOdeToJoy, celOdeToJoy];
 
 db.Song.remove({}, (err, songs) => {
   db.Song.create(songList, (err, songs) => {
