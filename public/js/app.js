@@ -16,6 +16,7 @@ const currentSong = [];
 var myScore;
 var scoreTracker = 0;
 var paused = false;
+let currentInstrument;
 let previousNoteAudio;
 let currentNoteAudio;
 // const songAudio = document.getElementById('songAudio');
@@ -186,25 +187,49 @@ function updateGameArea() {
       if (playLine.stopNote(playedNotes[0])) {
         if (myNotes.length > 0) {
           if (myNotes[0].pitch !== 'rest' && playedNotes[0].pitch !== 'rest') {
-            let previousNoteFromTable = sciPitchToStrAndFretViolin[playedNotes[0].pitch];
+            let previousNoteFromTable;
+            let nextNoteFromTable;
+            if (currentInstrument === 'violin') {
+              previousNoteFromTable = sciPitchToStrAndFretViolin[playedNotes[0].pitch];
+              nextNoteFromTable = sciPitchToStrAndFretViolin[myNotes[0].pitch];
+            } else if (currentInstrument === 'viola') {
+              previousNoteFromTable = sciPitchToStrAndFretViola[playedNotes[0].pitch];
+              nextNoteFromTable = sciPitchToStrAndFretViola[myNotes[0].pitch];
+            } else if (currentInstrument === 'cello') {
+              previousNoteFromTable = sciPitchToStrAndFretCello[playedNotes[0].pitch];
+              nextNoteFromTable = sciPitchToStrAndFretCello[myNotes[0].pitch];
+            }
             let previousNoteFretAndColor = previousNoteFromTable.color[0] + previousNoteFromTable.fret;
             let previousNote = document.getElementsByClassName(previousNoteFretAndColor)[0];
             previousNote.style.color = 'white';
             previousNote.style.background = 'white';
-            let nextNoteFromTable = sciPitchToStrAndFretViolin[myNotes[0].pitch];
             let nextNoteFretAndColor = nextNoteFromTable.color[0] + nextNoteFromTable.fret;
             let nextNote = document.getElementsByClassName(nextNoteFretAndColor)[0];
             nextNote.style.color = 'black';
             nextNote.style.background = '#3dffe2';
             playedNotes.shift();
           } else if (playedNotes[0].pitch !== 'rest') {
-            let previousNoteFromTable = sciPitchToStrAndFretViolin[playedNotes[0].pitch];
+            let previousNoteFromTable;
+            if (currentInstrument === 'violin') {
+              previousNoteFromTable = sciPitchToStrAndFretViolin[playedNotes[0].pitch];
+            } else if (currentInstrument === 'viola') {
+              previousNoteFromTable = sciPitchToStrAndFretViola[playedNotes[0].pitch];
+            } else if (currentInstrument === 'cello') {
+              previousNoteFromTable = sciPitchToStrAndFretCello[playedNotes[0].pitch];
+            }
             let previousNoteFretAndColor = previousNoteFromTable.color[0] + previousNoteFromTable.fret;
             let previousNote = document.getElementsByClassName(previousNoteFretAndColor)[0];
             previousNote.style.color = 'white';
             previousNote.style.background = 'white';
           } else if (myNotes[0].pitch !== 'rest') {
-            let nextNoteFromTable = sciPitchToStrAndFretViolin[myNotes[0].pitch];
+            let nextNoteFromTable;
+            if (currentInstrument === 'violin') {
+              nextNoteFromTable = sciPitchToStrAndFretViolin[myNotes[0].pitch];
+            } else if (currentInstrument === 'viola') {
+              nextNoteFromTable = sciPitchToStrAndFretViola[myNotes[0].pitch];
+            } else if (currentInstrument === 'cello') {
+              nextNoteFromTable = sciPitchToStrAndFretCello[myNotes[0].pitch];
+            }
             let nextNoteFretAndColor = nextNoteFromTable.color[0] + nextNoteFromTable.fret;
             let nextNote = document.getElementsByClassName(nextNoteFretAndColor)[0];
             nextNote.style.color = 'black';
@@ -212,7 +237,14 @@ function updateGameArea() {
             playedNotes.shift();
           }
         } else {
-          let previousNoteFromTable = sciPitchToStrAndFretViolin[playedNotes[0].pitch];
+          let previousNoteFromTable;
+          if (currentInstrument === 'violin') {
+            previousNoteFromTable = sciPitchToStrAndFretViolin[playedNotes[0].pitch];
+          } else if (currentInstrument === 'viola') {
+            previousNoteFromTable = sciPitchToStrAndFretViola[playedNotes[0].pitch];
+          } else if (currentInstrument === 'violin') {
+            previousNoteFromTable = sciPitchToStrAndFretCello[playedNotes[0].pitch];
+          }
           let previousNoteFretAndColor = previousNoteFromTable.color[0] + previousNoteFromTable.fret;
           previousNote = document.getElementsByClassName(previousNoteFretAndColor)[0];
           previousNote.style.color = 'white';
@@ -242,7 +274,14 @@ function updateGameArea() {
         keyTracker++;
         myGameArea.distanceToNextNote = noteLength * timing;
         if (myGameArea.frameNo == 1) {
-          let firstNoteFromTable = sciPitchToStrAndFretViolin[myNotes[0].pitch];
+          let firstNoteFromTable;
+          if (currentInstrument === 'violin') {
+            firstNoteFromTable = sciPitchToStrAndFretViolin[myNotes[0].pitch];
+          } else if (currentInstrument === 'viola') {
+            firstNoteFromTable = sciPitchToStrAndFretViola[myNotes[0].pitch];
+          } else if (currentInstrument === 'cello') {
+            firstNoteFromTable = sciPitchToStrAndFretCello[myNotes[0].pitch];
+          }
           let firstNoteFretAndColor = firstNoteFromTable.color[0] + firstNoteFromTable.fret;
           let firstNote = document.getElementsByClassName(firstNoteFretAndColor)[0];
           firstNote.style.color = 'black';
@@ -338,24 +377,68 @@ document.addEventListener("DOMContentLoaded", (event) => {
     url: ajaxRequestUrl,
     success: (json) => {
       let currentSongRawData = json.songData;
-      for (let i = 0; i < currentSongRawData.length; i++) {
-        let currentNoteData = {};
-        currentNoteData.length = currentSongRawData[i].length;
-        currentNoteData.pitch = currentSongRawData[i].pitch;
-        currentNoteData.fret = sciPitchToStrAndFretViolin[currentSongRawData[i].pitch].fret;
-        if (sciPitchToStrAndFretViolin[currentSongRawData[i].pitch].color === 'green') {
-          currentNoteData.color = green;
-        } else if (sciPitchToStrAndFretViolin[currentSongRawData[i].pitch].color === 'red') {
-          currentNoteData.color = red;
-        } else if (sciPitchToStrAndFretViolin[currentSongRawData[i].pitch].color === 'blue') {
-          currentNoteData.color = blue;
-        } else if (sciPitchToStrAndFretViolin[currentSongRawData[i].pitch].color === 'yellow') {
-          currentNoteData.color = yellow;
-        } else if (sciPitchToStrAndFretViolin[currentSongRawData[i].pitch].color === 'none') {
-          currentNoteData.color = 'rgba(0,0,0,0)';
+      if (json.instrument === 'violin') {
+        currentInstrument = 'violin';
+        for (let i = 0; i < currentSongRawData.length; i++) {
+          let currentNoteData = {};
+          currentNoteData.length = currentSongRawData[i].length;
+          currentNoteData.pitch = currentSongRawData[i].pitch;
+          currentNoteData.fret = sciPitchToStrAndFretViolin[currentSongRawData[i].pitch].fret;
+          if (sciPitchToStrAndFretViolin[currentSongRawData[i].pitch].color === 'green') {
+            currentNoteData.color = green;
+          } else if (sciPitchToStrAndFretViolin[currentSongRawData[i].pitch].color === 'red') {
+            currentNoteData.color = red;
+          } else if (sciPitchToStrAndFretViolin[currentSongRawData[i].pitch].color === 'blue') {
+            currentNoteData.color = blue;
+          } else if (sciPitchToStrAndFretViolin[currentSongRawData[i].pitch].color === 'yellow') {
+            currentNoteData.color = yellow;
+          } else if (sciPitchToStrAndFretViolin[currentSongRawData[i].pitch].color === 'none') {
+            currentNoteData.color = 'rgba(0,0,0,0)';
+          }
+          currentSong.push(currentNoteData);
         }
-        currentSong.push(currentNoteData);
+      } else if (json.instrument === 'viola') {
+        currentInstrument = 'viola';
+        for (let i = 0; i < currentSongRawData.length; i++) {
+          let currentNoteData = {};
+          currentNoteData.length = currentSongRawData[i].length;
+          currentNoteData.pitch = currentSongRawData[i].pitch;
+          currentNoteData.fret = sciPitchToStrAndFretViola[currentSongRawData[i].pitch].fret;
+          if (sciPitchToStrAndFretViola[currentSongRawData[i].pitch].color === 'green') {
+            currentNoteData.color = green;
+          } else if (sciPitchToStrAndFretViola[currentSongRawData[i].pitch].color === 'red') {
+            currentNoteData.color = red;
+          } else if (sciPitchToStrAndFretViola[currentSongRawData[i].pitch].color === 'blue') {
+            currentNoteData.color = blue;
+          } else if (sciPitchToStrAndFretViola[currentSongRawData[i].pitch].color === 'yellow') {
+            currentNoteData.color = yellow;
+          } else if (sciPitchToStrAndFretViola[currentSongRawData[i].pitch].color === 'none') {
+            currentNoteData.color = 'rgba(0,0,0,0)';
+          }
+          currentSong.push(currentNoteData);
+        }
+      } else if (json.instrument === 'cello') {
+        currentInstrument = 'cello';
+        for (let i = 0; i < currentSongRawData.length; i++) {
+          let currentNoteData = {};
+          currentNoteData.length = currentSongRawData[i].length;
+          currentNoteData.pitch = currentSongRawData[i].pitch;
+          currentNoteData.fret = sciPitchToStrAndFretCello[currentSongRawData[i].pitch].fret;
+          if (sciPitchToStrAndFretCello[currentSongRawData[i].pitch].color === 'green') {
+            currentNoteData.color = green;
+          } else if (sciPitchToStrAndFretCello[currentSongRawData[i].pitch].color === 'red') {
+            currentNoteData.color = red;
+          } else if (sciPitchToStrAndFretCello[currentSongRawData[i].pitch].color === 'blue') {
+            currentNoteData.color = blue;
+          } else if (sciPitchToStrAndFretCello[currentSongRawData[i].pitch].color === 'yellow') {
+            currentNoteData.color = yellow;
+          } else if (sciPitchToStrAndFretCello[currentSongRawData[i].pitch].color === 'none') {
+            currentNoteData.color = 'rgba(0,0,0,0)';
+          }
+          currentSong.push(currentNoteData);
+        }
       }
+
     },
     error: () => {
       console.log('error retrieving current song data');

@@ -64,7 +64,8 @@ const lightRow = [
 const lightlyRow = {
   name: "Lightly Row",
   difficulty: 2,
-  songData: []
+  songData: [],
+  instrument: 'violin'
 }
 for (let i = 0; i < lightRow.length; i++) {
   let currentNote = {};
@@ -106,7 +107,8 @@ const maryLamb = [
 const maryHadALittleLamb = {
   name: "Mary Had A Little Lamb",
   difficulty: 2,
-  songData: []
+  songData: [],
+  instrument: 'violin'
 }
 for (let i = 0; i < maryLamb.length; i++) {
   let currentNote = {};
@@ -219,7 +221,8 @@ const princessZeldaTheme = [
 const zeldaTheme = {
   name: "Princess Zelda's Theme",
   difficulty: 3,
-  songData: []
+  songData: [],
+  instrument: 'violin'
 }
 for (let i = 0; i < princessZeldaTheme.length; i++) {
   let currentNote = {};
@@ -361,15 +364,18 @@ const twinkleTwinkleSongData = [
 const twinkleTwinkle = {
   name: "Twinkle Twinkle Little Star",
   difficulty: 1,
-  songData: twinkleTwinkleSongData
+  songData: twinkleTwinkleSongData,
+  instrument: 'violin'
 }
 
-const songList = [lightlyRow];
+const songList = [lightlyRow, twinkleTwinkle, zeldaTheme, maryHadALittleLamb];
 
-db.Song.create(songList, (err, songs) => {
-  if (err) {
-    return console.log('ERROR ' + err);
-  }
-  console.log('created ' + songs.length + 'songs');
-  process.exit();
+db.Song.remove({}, (err, songs) => {
+  db.Song.create(songList, (err, songs) => {
+    if (err) {
+      return console.log('ERROR ' + err);
+    }
+    console.log('created ' + songs.length + 'songs');
+    process.exit();
+  })
 })

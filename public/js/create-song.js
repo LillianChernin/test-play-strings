@@ -16,6 +16,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
   submitNewSongButton.addEventListener('click', (event) => {
     let newSongTitle = document.getElementsByClassName('songNameInput')[0].value;
     let newSongDifficulty = document.getElementsByClassName('difficultySelect')[0].value;
+    let newSongInstrument = document.getElementsByClassName('instrumentSelect')[0].value;
     console.log('button is working')
     console.log(newSongNoteList)
     console.log(newSongTitle)
@@ -27,6 +28,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
         name: newSongTitle,
         difficulty: newSongDifficulty,
         songData: newSongNoteList,
+        instrument: newSongInstrument,
         arrayLength: newSongNoteList.length
       },
       success: (json) => {

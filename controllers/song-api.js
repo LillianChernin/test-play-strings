@@ -18,6 +18,7 @@ const post = (req, res) => {
   let newSong = new db.Song();
   newSong.name = req.body.name;
   newSong.difficulty = req.body.difficulty;
+  newSong.instrument = req.body.instrument;
   newSong.songData = [];
   for (let i = 0; i < req.body.arrayLength; i++) {
     let noteObject = {};
