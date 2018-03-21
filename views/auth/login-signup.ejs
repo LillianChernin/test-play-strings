@@ -1,0 +1,34 @@
+<% include ../partials/header %>
+
+<div class="login-box-wrapper">
+  <fieldset>
+    <h2>Login With Existing Account</h2>
+    <label for="email">Email</label>
+    <input id="loginEmailInput" type="text" name="email" placeholder="Your Email">
+    <label for="password">Password</label>
+    <input id="loginPasswordInput" type="password" name="password" placeholder="xxxxxxxx">
+    <button class="loginButton">Log In</button>
+  </fieldset>
+</div>
+<div>
+  <fieldset>
+    <h3>Sign Up</h3>
+    <label for="name">Name</label>
+    <input id="signupNameInput" type="text" name="name"></input>
+    <label for="username">Username</label>
+    <input id="signupUsernameInput" type="text" name="username"></input>
+    <label for="email">Email</label>
+    <input id="signupEmailInput" type="text" name="email"></input>
+    <label for="confirmEmail">Confirm Email</label>
+    <input id="signupConfirmEmailInput" type="text" name="confirmEmail"></input>
+    <label for="password">Password</label>
+    <input id="signupPasswordInput" type="password" name="password"></input>
+    <label for="confirmPassword">Confirm Password</label>
+    <input id="signupConfirmPasswordInput" type="password" name="confirmPassword"></input>
+    <button id="signupButton">Sign Up</button>
+  </fieldset>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="/js/login-signup.js"></script>
+<% include ../partials/footer %>

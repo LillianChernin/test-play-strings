@@ -1,24 +1,15 @@
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
-var audioContext = new AudioContext();
-// var audioContext = null;
-var isPlaying = false;
-var sourceNode = null;
-var analyser = null;
-var theBuffer = null;
-var mediaStreamSource = null;
-var currentNotePitchDetected = "";
+const audioContext = new AudioContext();
+let analyser = null;
+let mediaStreamSource = null;
+let currentNotePitchDetected = "";
 
-window.onload = function() {
-	// audioContext = new AudioContext();
-	MAX_SIZE = Math.max(4,Math.floor(audioContext.sampleRate/5000));	// corresponds to a 5kHz signal
-}
-
-function error() {
+const error = () => {
     alert('Stream generation failed.');
 }
 
-function getUserMedia(dictionary, callback) {
+const getUserMedia = (dictionary, callback) => {
     try {
         navigator.getUserMedia =
         	navigator.getUserMedia ||
@@ -30,7 +21,7 @@ function getUserMedia(dictionary, callback) {
     }
 }
 
-function gotStream(stream) {
+const gotStream = (stream) => {
     // Create an AudioNode from the stream.
     mediaStreamSource = audioContext.createMediaStreamSource(stream);
     // Connect it to the destination.
@@ -40,7 +31,7 @@ function gotStream(stream) {
     updatePitch();
 }
 
-function toggleLiveInput() {
+const toggleLiveInput = () => {
     getUserMedia(
     	{
             "audio": {
@@ -55,12 +46,12 @@ function toggleLiveInput() {
         }, gotStream);
 }
 
-var buflen = 1024;
+const buflen = 1024;
 var buf = new Float32Array( buflen );
 var MIN_SAMPLES = 0;  // will be initialized when AudioContext is created.
 var GOOD_ENOUGH_CORRELATION = 0.9; // this is the "bar" for how close a correlation needs to be
 
-function autoCorrelate( buf, sampleRate ) {
+const autoCorrelate = (buf, sampleRate) => {
 	var SIZE = buf.length;
 	var MAX_SAMPLES = Math.floor(SIZE/2);
 	var best_offset = -1;
@@ -69,9 +60,9 @@ function autoCorrelate( buf, sampleRate ) {
 	var foundGoodCorrelation = false;
 	var correlations = new Array(MAX_SAMPLES);
 
-	for (var i=0;i<SIZE;i++) {
-		var val = buf[i];
-		rms += val*val;
+	for (let i = 0; i < SIZE; i++) {
+		const val = buf[i];
+		rms += val * val;
 	}
 	rms = Math.sqrt(rms/SIZE);
 	if (rms<0.01) // not enough signal
@@ -112,16 +103,15 @@ function autoCorrelate( buf, sampleRate ) {
 		return sampleRate/best_offset;
 	}
 	return -1;
-//	var best_frequency = sampleRate/best_offset;
 }
 
-function updatePitch( time ) {
-	var cycles = new Array;
-	analyser.getFloatTimeDomainData( buf );
-	var ac = autoCorrelate( buf, audioContext.sampleRate );
+const updatePitch = (time) => {
+	analyser.getFloatTimeDomainData(buf);
+	let ac = autoCorrelate(buf, audioContext.sampleRate);
  	if (ac == -1) {
     currentNotePitchDetected = "";
  	} else {
     currentNotePitchDetected = ac;
+		console.log(ac);
 	}
 }

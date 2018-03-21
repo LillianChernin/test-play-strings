@@ -25,7 +25,7 @@ app.use(cookieParser())
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
-app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 }}))
+app.use(session({ secret: ENV.SESSION_SECRET, cookie: { maxAge: 60000 }}))
 
 mongoose.connect(ENV.MONGODB_URI);
 

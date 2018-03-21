@@ -3,32 +3,32 @@ const red = '#ff402b';
 const blue = '#424bf4';
 const yellow = '#f4ee42';
 
-var playLine;
-var myObstacles = [];
-var clearedObstacles = [];
-var myNotes = [];
-var playedNotes = [];
-var beatCounter = 0;
-var keyTracker = 0;
-var timing = 120;
-var intervalTiming = 5;
+let playLine;
+const myObstacles = [];
+const clearedObstacles = [];
+const myNotes = [];
+const playedNotes = [];
+let beatCounter = 0;
+let keyTracker = 0;
+let timing = 120;
+let intervalTiming = 5;
 const currentSong = [];
-var myScore;
-var scoreTracker = 0;
-var paused = false;
+let myScore;
+let scoreTracker = 0;
+let paused = false;
 let currentInstrument;
 let previousNoteAudio;
 let currentNoteAudio;
 // const songAudio = document.getElementById('songAudio');
 const songScrollBox = document.getElementsByClassName('song-scroll-box-wrapper')[0];
 
-function startGame() {
+const startGame = () => {
     playLine = new component(10, 360, "#6dffd8", 200, 0);
-    myScore = new component("30px", "Consolas", "black", 280, 40, "text");
+    myScore = new component("30px", "Tillana", "black", 280, 40, "text");
     myGameArea.start();
 }
 
-var myGameArea = {
+const myGameArea = {
     canvas : document.createElement("canvas"),
     start : function() {
         this.canvas.width = 1000;
@@ -128,8 +128,8 @@ function component(width, height, color, x, y, type, key, pitch) {
 
 function updateGameArea() {
   if (!paused) {
-    var x, height, gap, minHeight, maxHeight, minGap, maxGap, noteWidth, intervalLength, clearedX, clearedColor, currentInterval, distanceToNextNote;
-    for (var i = 0; i < myObstacles.length; i += 1) {
+    let x, height, gap, minHeight, maxHeight, minGap, maxGap, noteWidth, intervalLength, clearedX, clearedColor, currentInterval, distanceToNextNote;
+    for (let i = 0; i < myObstacles.length; i += 1) {
         if (playLine.crashWith(myObstacles[i]) && (myObstacles[i].type !== "text")) {
           updatePitch();
           if (playLine.evaluatePitch(currentNotePitchDetected, myObstacles[i].pitch)) {
@@ -265,7 +265,7 @@ function updateGameArea() {
         noteLength = currentSong[beatCounter].length;
         notePitch = currentSong[beatCounter].pitch;
         let fretNoXPos = x + (noteWidth / 2);
-        let fretNo = new component("30px", "Consolas", "black", fretNoXPos, 215, "text", keyTracker)
+        let fretNo = new component("30px", "Comic Sans MS", "black", fretNoXPos, 215, "text", keyTracker)
         fretNo.text = currentSong[beatCounter].fret;
         myObstacles.push(new component(noteWidth, 50, noteColor, x, 180, noteLength, keyTracker, notePitch));
         myObstacles.push(fretNo);
