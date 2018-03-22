@@ -65,14 +65,8 @@ function component(width, height, color, x, y, type, key, pitch) {
     }
   }
   this.crashWith = (otherobj) => {
-    let myleft = this.x;
     let myright = this.x + (this.width);
-    let mytop = this.y;
-    let mybottom = this.y + (this.height);
     let otherleft = otherobj.x;
-    let otherright = otherobj.x + (otherobj.width);
-    let othertop = otherobj.y;
-    let otherbottom = otherobj.y + (otherobj.height);
     let crash = false;
     if (myright > otherleft) {
       crash = true;
@@ -299,6 +293,27 @@ const updateGameArea = () => {
   }
 }
 
+const addNotesToCurrentSong = (sciPitchToStrAndFret, songRawData) => {
+  for (let i = 0; i < songRawData.length; i++) {
+    let currentNoteData = {};
+    currentNoteData.length = songRawData[i].length;
+    currentNoteData.pitch = songRawData[i].pitch;
+    currentNoteData.fret = sciPitchToStrAndFret[songRawData[i].pitch].fret;
+    if (sciPitchToStrAndFret[songRawData[i].pitch].color === 'green') {
+      currentNoteData.color = green;
+    } else if (sciPitchToStrAndFret[songRawData[i].pitch].color === 'red') {
+      currentNoteData.color = red;
+    } else if (sciPitchToStrAndFret[songRawData[i].pitch].color === 'blue') {
+      currentNoteData.color = blue;
+    } else if (sciPitchToStrAndFret[songRawData[i].pitch].color === 'yellow') {
+      currentNoteData.color = yellow;
+    } else if (sciPitchToStrAndFret[songRawData[i].pitch].color === 'none') {
+      currentNoteData.color = 'rgba(0,0,0,0)';
+    }
+    currentSong.push(currentNoteData);
+  }
+}
+
 
 document.addEventListener("DOMContentLoaded", (event) => {
   let deleteSongButton = document.getElementsByClassName('deleteSongButton')[0];
@@ -366,64 +381,13 @@ document.addEventListener("DOMContentLoaded", (event) => {
       let currentSongRawData = json.songData;
       if (json.instrument === 'violin') {
         currentInstrument = 'violin';
-        for (let i = 0; i < currentSongRawData.length; i++) {
-          let currentNoteData = {};
-          currentNoteData.length = currentSongRawData[i].length;
-          currentNoteData.pitch = currentSongRawData[i].pitch;
-          currentNoteData.fret = sciPitchToStrAndFretViolin[currentSongRawData[i].pitch].fret;
-          if (sciPitchToStrAndFretViolin[currentSongRawData[i].pitch].color === 'green') {
-            currentNoteData.color = green;
-          } else if (sciPitchToStrAndFretViolin[currentSongRawData[i].pitch].color === 'red') {
-            currentNoteData.color = red;
-          } else if (sciPitchToStrAndFretViolin[currentSongRawData[i].pitch].color === 'blue') {
-            currentNoteData.color = blue;
-          } else if (sciPitchToStrAndFretViolin[currentSongRawData[i].pitch].color === 'yellow') {
-            currentNoteData.color = yellow;
-          } else if (sciPitchToStrAndFretViolin[currentSongRawData[i].pitch].color === 'none') {
-            currentNoteData.color = 'rgba(0,0,0,0)';
-          }
-          currentSong.push(currentNoteData);
-        }
+        addNotesToCurrentSong(sciPitchToStrAndFretViolin, currentSongRawData);
       } else if (json.instrument === 'viola') {
         currentInstrument = 'viola';
-        for (let i = 0; i < currentSongRawData.length; i++) {
-          let currentNoteData = {};
-          currentNoteData.length = currentSongRawData[i].length;
-          currentNoteData.pitch = currentSongRawData[i].pitch;
-          currentNoteData.fret = sciPitchToStrAndFretViola[currentSongRawData[i].pitch].fret;
-          if (sciPitchToStrAndFretViola[currentSongRawData[i].pitch].color === 'green') {
-            currentNoteData.color = green;
-          } else if (sciPitchToStrAndFretViola[currentSongRawData[i].pitch].color === 'red') {
-            currentNoteData.color = red;
-          } else if (sciPitchToStrAndFretViola[currentSongRawData[i].pitch].color === 'blue') {
-            currentNoteData.color = blue;
-          } else if (sciPitchToStrAndFretViola[currentSongRawData[i].pitch].color === 'yellow') {
-            currentNoteData.color = yellow;
-          } else if (sciPitchToStrAndFretViola[currentSongRawData[i].pitch].color === 'none') {
-            currentNoteData.color = 'rgba(0,0,0,0)';
-          }
-          currentSong.push(currentNoteData);
-        }
+        addNotesToCurrentSong(sciPitchToStrAndFretViola, currentSongRawData);
       } else if (json.instrument === 'cello') {
         currentInstrument = 'cello';
-        for (let i = 0; i < currentSongRawData.length; i++) {
-          let currentNoteData = {};
-          currentNoteData.length = currentSongRawData[i].length;
-          currentNoteData.pitch = currentSongRawData[i].pitch;
-          currentNoteData.fret = sciPitchToStrAndFretCello[currentSongRawData[i].pitch].fret;
-          if (sciPitchToStrAndFretCello[currentSongRawData[i].pitch].color === 'green') {
-            currentNoteData.color = green;
-          } else if (sciPitchToStrAndFretCello[currentSongRawData[i].pitch].color === 'red') {
-            currentNoteData.color = red;
-          } else if (sciPitchToStrAndFretCello[currentSongRawData[i].pitch].color === 'blue') {
-            currentNoteData.color = blue;
-          } else if (sciPitchToStrAndFretCello[currentSongRawData[i].pitch].color === 'yellow') {
-            currentNoteData.color = yellow;
-          } else if (sciPitchToStrAndFretCello[currentSongRawData[i].pitch].color === 'none') {
-            currentNoteData.color = 'rgba(0,0,0,0)';
-          }
-          currentSong.push(currentNoteData);
-        }
+        addNotesToCurrentSong(sciPitchToStrAndFretCello, currentSongRawData);
       }
     },
     error: () => {
