@@ -246,7 +246,7 @@ const updateGameArea = () => {
     myGameArea.clear();
     myGameArea.frameNo += 1;
     myGameArea.distanceToNextNote -= 1;
-    if (myGameArea.distanceToNextNote === 0) {
+    if (myGameArea.distanceToNextNote === 0 && currentSong[beatCounter] !== undefined) {
       x = myGameArea.canvas.width;
       noteWidth = currentSong[beatCounter].length * (timing - 10);
       noteColor = currentSong[beatCounter].color;
