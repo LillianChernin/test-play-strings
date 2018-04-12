@@ -54,13 +54,13 @@ function component(width, height, color, x, y, type, key, pitch) {
   this.key = key;
   this.pitch = pitch;
   this.update = () => {
-    ctx = myGameArea.context;
+    let ctx = myGameArea.context;
     if (this.type == "text") {
       ctx.font = this.width + " " + this.height;
-      ctx.fillStyle = color;
+      ctx.fillStyle = this.color;
       ctx.fillText(this.text, this.x, this.y);
     } else {
-      ctx.fillStyle = color;
+      ctx.fillStyle = this.color;
       ctx.fillRect(this.x, this.y, this.width, this.height);
     }
   }
@@ -100,27 +100,29 @@ function component(width, height, color, x, y, type, key, pitch) {
     }
     return stop;
   }
-  this.evaluatePitch = (currentDetectedPitch, currentNoteSciPitch) => {
+  this.evaluatePitch = (currentDetectedPitch, currentNoteSciPitch,currentNote,passedNote) => {
+    let result;
     let highEnd = sciPitchToHertz[currentNoteSciPitch] + (sciPitchToHertz[currentNoteSciPitch] * .05);
     let lowEnd = sciPitchToHertz[currentNoteSciPitch] - (sciPitchToHertz[currentNoteSciPitch] * .05);
     let currentDetectedPitchOneOctaveDown = currentDetectedPitch / 2;
     let currentDetectedPitchTwoOctavesDown = currentDetectedPitchOneOctaveDown / 2;
     let currentDetectedPitchThreeOctavesDown = currentDetectedPitchTwoOctavesDown / 2;
     if ((currentDetectedPitch < highEnd && currentDetectedPitch > lowEnd) || (currentDetectedPitchOneOctaveDown < highEnd && currentDetectedPitchOneOctaveDown > lowEnd) || (currentDetectedPitchTwoOctavesDown < highEnd && currentDetectedPitchTwoOctavesDown > lowEnd) || (currentDetectedPitchThreeOctavesDown < highEnd && currentDetectedPitchThreeOctavesDown > lowEnd)) {
-      return true;
+      result = true;
     } else {
-      return false;
+      result = false;
     }
+    return result;
   }
 }
 
 const updateGameArea = () => {
   if (!paused) {
-    let x, height, gap, minHeight, maxHeight, minGap, maxGap, noteWidth, intervalLength, clearedX, clearedColor, currentInterval, distanceToNextNote;
+    let x, height, gap, minHeight, maxHeight, minGap, maxGap, noteWidth, intervalLength, clearedX, clearedColor, clearedY, currentInterval, distanceToNextNote;
     for (let i = 0; i < myObstacles.length; i += 1) {
       if (playLine.crashWith(myObstacles[i]) && (myObstacles[i].type !== "text")) {
         updatePitch();
-        if (playLine.evaluatePitch(currentNotePitchDetected, myObstacles[i].pitch)) {
+        if (playLine.evaluatePitch(currentNotePitchDetected, myObstacles[i].pitch, myObstacles[i],clearedObstacles[myObstacles[i].key])) {
           scoreTracker++;
         }
         myObstacles[i].width--;
@@ -130,19 +132,23 @@ const updateGameArea = () => {
         } else {
           if (myObstacles[i].color === green) {
             clearedColor = '#224f13';
+            clearedY = 60;
           } else if (myObstacles[i].color === red) {
             clearedColor = '#4f1212';
+            clearedY = 120;
           } else if (myObstacles[i].color === blue) {
             clearedColor = '#141256';
+            clearedY = 180;
           } else if (myObstacles[i].color === yellow) {
             clearedColor = '#665e07';
+            clearedY = 240;
           } else if (myObstacles[i].color === 'rgba(0,0,0,0)') {
             clearedColor = 'rgba(0,0,0,0)';
           }
           clearedX = myObstacles[i].x;
-          clearedObstacles.push(new component(1, 50, clearedColor, clearedX, 180, 0, keyTracker))
+          clearedObstacles.push(new component(1, 50, clearedColor, clearedX, clearedY, 0, keyTracker))
         }
-        if(playLine.passWith(myObstacles[i]) && (myObstacles[i].type !== "text")) {
+        if(playLine.passWith(myObstacles[i])) {
           myObstacles.splice(i,1);
         }
       }
@@ -162,8 +168,7 @@ const updateGameArea = () => {
           currentNoteAudio.currentTime = 2;
           currentNoteAudio.play();
         }
-        currentNote = myNotes[0];
-        playedNotes.push(currentNote);
+        playedNotes.push(myNotes[0]);
         myNotes.shift();
       }
     }
@@ -247,12 +252,13 @@ const updateGameArea = () => {
       noteColor = currentSong[beatCounter].color;
       noteLength = currentSong[beatCounter].length;
       notePitch = currentSong[beatCounter].pitch;
-      let fretNoXPos = x + (noteWidth / 2);
-      let fretNo = new component("30px", "Comic Sans MS", "black", fretNoXPos, 215, "text", keyTracker)
+      yPosition = currentSong[beatCounter].yPosition;
+      let fretNoXPos = x + ((noteWidth/ 2) * 0.90);
+      let fretNo = new component("30px", "Comic Sans MS", "black", fretNoXPos, (yPosition + 35), "text", keyTracker)
       fretNo.text = currentSong[beatCounter].fret;
-      myObstacles.push(new component(noteWidth, 50, noteColor, x, 180, noteLength, keyTracker, notePitch));
+      myObstacles.push(new component(noteWidth, 50, noteColor, x, yPosition, noteLength, keyTracker, notePitch));
       myObstacles.push(fretNo);
-      myNotes.push(new component(noteWidth, 50, "rgba(0,0,0,0)", x, 180, noteLength, keyTracker, notePitch))
+      myNotes.push(new component(noteWidth, 50, "rgba(0,0,0,0)", x, yPosition, noteLength, keyTracker, notePitch))
       beatCounter++;
       keyTracker++;
       myGameArea.distanceToNextNote = noteLength * timing;
@@ -301,12 +307,16 @@ const addNotesToCurrentSong = (sciPitchToStrAndFret, songRawData) => {
     currentNoteData.fret = sciPitchToStrAndFret[songRawData[i].pitch].fret;
     if (sciPitchToStrAndFret[songRawData[i].pitch].color === 'green') {
       currentNoteData.color = green;
+      currentNoteData.yPosition = 60;
     } else if (sciPitchToStrAndFret[songRawData[i].pitch].color === 'red') {
       currentNoteData.color = red;
+      currentNoteData.yPosition = 120;
     } else if (sciPitchToStrAndFret[songRawData[i].pitch].color === 'blue') {
       currentNoteData.color = blue;
+      currentNoteData.yPosition = 180;
     } else if (sciPitchToStrAndFret[songRawData[i].pitch].color === 'yellow') {
       currentNoteData.color = yellow;
+      currentNoteData.yPosition = 240;
     } else if (sciPitchToStrAndFret[songRawData[i].pitch].color === 'none') {
       currentNoteData.color = 'rgba(0,0,0,0)';
     }

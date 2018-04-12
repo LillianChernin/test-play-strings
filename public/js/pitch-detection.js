@@ -47,32 +47,32 @@ const toggleLiveInput = () => {
 }
 
 const buflen = 1024;
-var buf = new Float32Array( buflen );
-var MIN_SAMPLES = 0;  // will be initialized when AudioContext is created.
-var GOOD_ENOUGH_CORRELATION = 0.9; // this is the "bar" for how close a correlation needs to be
+const buf = new Float32Array( buflen );
+const MIN_SAMPLES = 0;  // will be initialized when AudioContext is created.
+const GOOD_ENOUGH_CORRELATION = 0.9; // this is the "bar" for how close a correlation needs to be
 
 const autoCorrelate = (buf, sampleRate) => {
-	var SIZE = buf.length;
-	var MAX_SAMPLES = Math.floor(SIZE/2);
-	var best_offset = -1;
-	var best_correlation = 0;
-	var rms = 0;
-	var foundGoodCorrelation = false;
-	var correlations = new Array(MAX_SAMPLES);
+	const SIZE = buf.length;
+	const MAX_SAMPLES = Math.floor(SIZE/2);
+	let best_offset = -1;
+	let best_correlation = 0;
+	let rms = 0;
+	let foundGoodCorrelation = false;
+	let correlations = new Array(MAX_SAMPLES);
 
 	for (let i = 0; i < SIZE; i++) {
-		const val = buf[i];
+		let val = buf[i];
 		rms += val * val;
 	}
 	rms = Math.sqrt(rms/SIZE);
-	if (rms<0.01) // not enough signal
-		return -1;
+	if (rms < 0.01) {  //not enough signal
+    return -1;
+  }
+	let lastCorrelation = 1;
+	for (let offset = MIN_SAMPLES; offset < MAX_SAMPLES; offset++) {
+		let correlation = 0;
 
-	var lastCorrelation=1;
-	for (var offset = MIN_SAMPLES; offset < MAX_SAMPLES; offset++) {
-		var correlation = 0;
-
-		for (var i=0; i<MAX_SAMPLES; i++) {
+		for (let i = 0; i < MAX_SAMPLES; i++) {
 			correlation += Math.abs((buf[i])-(buf[i+offset]));
 		}
 		correlation = 1 - (correlation/MAX_SAMPLES);
@@ -93,13 +93,12 @@ const autoCorrelate = (buf, sampleRate) => {
 			// we know best_offset >=1,
 			// since foundGoodCorrelation cannot go to true until the second pass (offset=1), and
 			// we can't drop into this clause until the following pass (else if).
-			var shift = (correlations[best_offset+1] - correlations[best_offset-1])/correlations[best_offset];
+			let shift = (correlations[best_offset+1] - correlations[best_offset-1])/correlations[best_offset];
 			return sampleRate/(best_offset+(8*shift));
 		}
 		lastCorrelation = correlation;
 	}
 	if (best_correlation > 0.01) {
-		// console.log("f = " + sampleRate/best_offset + "Hz (rms: " + rms + " confidence: " + best_correlation + ")")
 		return sampleRate/best_offset;
 	}
 	return -1;
@@ -112,6 +111,5 @@ const updatePitch = (time) => {
     currentNotePitchDetected = "";
  	} else {
     currentNotePitchDetected = ac;
-		console.log(ac);
 	}
 }
